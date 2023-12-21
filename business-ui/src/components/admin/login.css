@@ -1,0 +1,19 @@
+/* .loginImage {
+  margin-top: -160px;
+  margin-bottom: 70px;
+} */
+
+/* LoginForm.css */
+
+.remember-me-checkbox {
+  font-weight: bold;
+}
+
+.remember-me-checkbox input:checked ~ .box::before {
+  background-color: rgb(4, 236, 4); /* Màu nền khi ô được chọn */
+  border-color: green; /* Màu viền khi ô được chọn */
+}
+
+.remember-me-checkbox .box::before {
+  border-color: green; /* Màu viền */
+}
