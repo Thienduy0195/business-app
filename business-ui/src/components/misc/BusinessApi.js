@@ -9,7 +9,8 @@ export const businessApi = {
     signup,
     numberOfUsers,
     getUsers,
-    deleteUser
+    deleteUser,
+    forgotPassword
 }
 
 function authenticate(username, password) {
@@ -38,6 +39,12 @@ function getUsers(user, username) {
 function deleteUser(user, username) {
     return instance.delete(`/api/users/${username}`, {
         headers: { 'Authorization': bearerAuth(user) }
+    })
+}
+
+function forgotPassword(email) {
+    return instance.post('/auth/forgot-password', { email }, {
+        headers: { 'Content-type': 'application/json' }
     })
 }
 

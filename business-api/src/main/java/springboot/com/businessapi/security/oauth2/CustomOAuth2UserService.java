@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.security.CustomUserDetails;
 import springboot.com.businessapi.security.WebSecurityConfig;
-import springboot.com.businessapi.services.user.UserService;
+import springboot.com.businessapi.services.user.IUserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +17,10 @@ import java.util.Optional;
 @Component
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final UserService userService;
+    private final IUserService userService;
     private final List<OAuth2UserInfoExtractor> oAuth2UserInfoExtractors;
 
-    public CustomOAuth2UserService(UserService userService, List<OAuth2UserInfoExtractor> oAuth2UserInfoExtractors) {
+    public CustomOAuth2UserService(IUserService userService, List<OAuth2UserInfoExtractor> oAuth2UserInfoExtractors) {
         this.userService = userService;
         this.oAuth2UserInfoExtractors = oAuth2UserInfoExtractors;
     }

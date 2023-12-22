@@ -10,7 +10,7 @@ import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.mapper.UserMapper;
 import springboot.com.businessapi.rest_api.dto.user_dto.UserDto;
 import springboot.com.businessapi.security.CustomUserDetails;
-import springboot.com.businessapi.services.user.UserService;
+import springboot.com.businessapi.services.user.IUserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +24,7 @@ import static springboot.com.businessapi.config.SwaggerConfig.BEARER_KEY_SECURIT
 public class UserController {
 
 
-    private final UserService userService;
+    private final IUserService userService;
 
     private final UserMapper userMapper;
 

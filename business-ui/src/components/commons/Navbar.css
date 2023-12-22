@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #ff9100;
+  background-color: purple;
   height: 60px;
   display: flex;
   justify-content: center;
@@ -11,12 +11,12 @@
 }
 
 .nav-container {
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 60px;
-  /* max-width: 1500px; */
+  max-width: 1500px;
   position: relative;
 }
 
@@ -73,7 +73,7 @@
 
 .nav-icon {
   display: none;
-  color: #f5b921;
+  color: #ffffff;
 }
 
 .nav-icon .icon {
@@ -126,6 +126,6 @@
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-    color: #ffdd40;
+    color: #ffffff;
   }
 }

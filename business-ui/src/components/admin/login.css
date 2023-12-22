@@ -17,3 +17,14 @@
 .remember-me-checkbox .box::before {
   border-color: green; /* Màu viền */
 }
+
+.error-field {
+  display: flex;
+  justify-content: start;
+  color: rgb(78, 1, 1);
+}
+
+.reset-password {
+  display: flex;
+  justify-content: start;
+}

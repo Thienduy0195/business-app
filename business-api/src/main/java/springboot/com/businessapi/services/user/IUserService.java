@@ -6,7 +6,7 @@ import springboot.com.businessapi.entities.user.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService {
+public interface IUserService {
 
     List<User> getUsers();
 
@@ -23,4 +23,8 @@ public interface UserService {
     User saveUser(User user);
 
     void deleteUser(User user);
+
+    String forgotPass(String email);
+
+    String resetPass(String token, String password);
 }

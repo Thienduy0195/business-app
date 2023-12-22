@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.security.WebSecurityConfig;
 import springboot.com.businessapi.security.oauth2.OAuth2Provider;
-import springboot.com.businessapi.services.user.UserService;
+import springboot.com.businessapi.services.user.IUserService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
 
-    private final UserService userService;
+    private final IUserService userService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -35,7 +35,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private static final List<User> USERS = Arrays.asList(
-            new User("admin", "admin", "Admin", "admin@mycompany.com", WebSecurityConfig.ADMIN, null, OAuth2Provider.LOCAL, "1"),
-            new User("user", "user", "User", "user@mycompany.com", WebSecurityConfig.USER, null, OAuth2Provider.LOCAL, "2")
+            new User("admin", "admin", "Admin", "admin@gmail.com", WebSecurityConfig.ADMIN, null, OAuth2Provider.LOCAL, "1"),
+            new User("user", "user", "User", "user@gmail.com", WebSecurityConfig.USER, null, OAuth2Provider.LOCAL, "2")
     );
 }

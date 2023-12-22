@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import springboot.com.businessapi.entities.user.User;
-import springboot.com.businessapi.services.user.UserService;
+import springboot.com.businessapi.services.user.IUserService;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private final IUserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) {

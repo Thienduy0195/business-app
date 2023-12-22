@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import springboot.com.businessapi.security.oauth2.OAuth2Provider;
 
+import java.time.LocalDateTime;
+
 
 @Data
 @Getter
@@ -34,6 +36,10 @@ public class User {
     private OAuth2Provider provider;
 
     private String providerId;
+
+    private String token;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime tokenCreationDate;
 
     public User(String username, String password, String name, String email, String role, String imageUrl, OAuth2Provider provider, String providerId) {
         this.username = username;

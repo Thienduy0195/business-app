@@ -14,14 +14,16 @@ import springboot.com.businessapi.rest_api.dto.authen_dto.AuthResponse;
 import springboot.com.businessapi.rest_api.dto.authen_dto.LoginRequest;
 import springboot.com.businessapi.rest_api.dto.authen_dto.SignUpRequest;
 import springboot.com.businessapi.security.TokenProvider;
-import springboot.com.businessapi.services.user.UserService;
+import springboot.com.businessapi.services.user.IUserService;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final IUserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
     private final UserMapper userMapper;
@@ -51,6 +53,22 @@ public class AuthController {
     private String authenticateAndGetToken(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         return tokenProvider.generate(authentication);
+    }
+
+    @PostMapping("/forgot-password")
+    public String forgotPass(@RequestBody Map<String, String> request){
+        String email =  request.get("email");
+        String response = userService.forgotPass(email);
+
+        if(!response.startsWith("The email")){
+            response= "/reset-password?token=" + response;
+        }
+        return response;
+    }
+
+    @PutMapping("/reset-password")
+    public String resetPass(@RequestParam String token, @RequestParam String password){
+        return userService.resetPass(token,password);
     }
 
 

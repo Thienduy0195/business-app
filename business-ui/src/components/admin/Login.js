@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, Navigate, Link } from 'react-router-dom'
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext'
 import { parseJwt, getSocialLoginUrl, handleLogError } from '../misc/Helpers'
@@ -7,50 +9,67 @@ import loginImg from '../../assets/images/login.png'
 import './login.css'
 import { businessApi } from '../misc/BusinessApi'
 
+
+//TẠM THỜI KHÔNG DÙNG CÁI ValidationSchema NÀY
+const ValidationSchema = Yup.object().shape({
+  // username: Yup.string()
+  // .min(3, 'At least 3 characters!')
+  // .max(35, 'Max 35 characters!')
+  // .required('Required!'),
+  // password: Yup.string()
+  // .required('Required!'),
+});
+
 function Login() {
+
+
   const Auth = useAuth()
   const isLoggedIn = Auth.userIsAuthenticated()
-
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [message, setMessage] = useState('')
   const [isError, setIsError] = useState(false)
   const [rememberMe, setRememberMe] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
-  const handleInputChange = (e, { name, value }) => {
-    if (name === 'username') {
-      setUsername(value)
-    } else if (name === 'password') {
-      setPassword(value)
-    }
-  }
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: ValidationSchema,
+    onSubmit: async (values) => {
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+      console.log(values);
 
-    if (!(username && password)) {
-      setIsError(true)
-      return
-    }
+      if (!values.username || !values.password) {
+        setMessage('Username & password is required!')
+        setIsError(true);
+        return
+      } else {
+        setIsError(false)
+      }
 
-    try {
-      const response = await businessApi.authenticate(username, password)
-      console.log("RESPONE RS", response);
-      const { accessToken } = response.data
-      const data = parseJwt(accessToken)
-      const authenticatedUser = { data, accessToken }
+      // Xử lý khi form được submit
+      try {
+        const response = await businessApi.authenticate(values.username, values.password)
+        console.log("response", response);
+        const { accessToken } = response.data
 
-      console.log("DATA TOKEN", authenticatedUser);
+        const data = parseJwt(accessToken)
+        const authenticatedUser = { data, accessToken }
 
-      Auth.userLogin(authenticatedUser)
+        Auth.userLogin(authenticatedUser)
 
-      setUsername('')
-      setPassword('')
-      setIsError(false)
-    } catch (error) {
-      handleLogError(error)
-      setIsError(true)
-    }
-  }
+        setIsError(false)
+      } catch (error) {
+        handleLogError(error)
+        setMessage('The username or password provided are incorrect!')
+        setIsError(true)
+      }
+    },
+  });
 
   // if (isLoggedIn) {
   //   return <Navigate to='/' />
@@ -59,34 +78,64 @@ function Login() {
   return (
     <div>
 
-      <div className="loginImage text-center mt-3">
-        <img src={loginImg} width="250" style={{ position: 'relative' }} alt="login" />
+      <div className="loginImage text-center ">
+        <img src={loginImg} width="220" style={{ position: 'relative' }} alt="login" />
       </div>
 
       <Grid textAlign='center'>
 
         <Grid.Column style={{ maxWidth: 400 }}>
-          <Form size='large' onSubmit={handleSubmit}>
+          <Form size='large' onSubmit={formik.handleSubmit}>
             <Segment>
+              <div className='error-field'>
+                {formik.touched.username && formik.errors.username ? (
+                  <div>{formik.errors.username}</div>
+                ) : null}
+              </div>
+
               <Form.Input
                 fluid
                 autoFocus
                 name='username'
-                icon='user'
-                iconPosition='left'
+                action={{
+                  icon: 'user',
+                }}
+                actionPosition='left'
+                id="username"
+                type="text"
                 placeholder='Username'
-                onChange={handleInputChange}
+                onChange={formik.handleChange}
+                value={formik.values.username}
               />
+
+              <div className='error-field'>
+                {formik.touched.password && formik.errors.password ? (
+                  <div>{formik.errors.password}</div>
+                ) : null}
+              </div>
               <Form.Input
-                fluid
                 name='password'
-                icon='lock'
-                iconPosition='left'
+                type={passwordVisible ? 'text' : 'password'}
+                icon={
+                  <Icon
+                    name={passwordVisible ? 'eye' : 'eye slash'}
+                    link
+                    onClick={togglePasswordVisibility}
+                  />
+                }
+                fluid
+
+                iconPosition='right'
+                action={{
+                  icon: 'lock',
+                }}
+                actionPosition='left'
                 placeholder='Password'
-                type='password'
-                onChange={handleInputChange}
+                onChange={formik.handleChange}
+                value={formik.values.password}
               />
-              <Button color='purple' fluid size='large'>Login</Button>
+
+              <Button color='purple' fluid size='large' type='submit'>Login</Button>
             </Segment>
           </Form>
           <div className='mt-3 d-flex text-start'>
@@ -108,7 +157,7 @@ function Login() {
           {/* <Message>{`Don't have already an account? `}
             <NavLink to="/signup" color='purple'>Sign Up</NavLink>
           </Message> */}
-          {isError && <Message negative>The username or password provided are incorrect!</Message>}
+          {isError && <Message negative>{message}</Message>}
 
           <Divider horizontal>have a nice day !</Divider>
           {/* <Menu compact icon='labeled'>
@@ -131,4 +180,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login;
