@@ -34,23 +34,39 @@ public class EmailService implements IEmailSenderService {
         // Try block to check for exceptions
         try {
 
+            MimeMessage message = javaMailSender.createMimeMessage();
+            // Sử dụng Helper để thiết lập các thông tin cần thiết cho message
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom("info.silvafarm@gmail.com");
+            helper.setTo(details.getRecipient());
+            helper.setSubject(details.getSubject());
+            helper.setText(details.getMsgBody(), true);
+            helper.setReplyTo("info.silvafarm@gmail.com");
+
+
+            // Gửi message đến SMTP server
+            javaMailSender.send(message);
+
             // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
+//            SimpleMailMessage mailMessage
+//                    = new SimpleMailMessage();
 
             // Setting up necessary details
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
-
-            // Sending the mail
-            javaMailSender.send(mailMessage);
+//            mailMessage.setFrom(sender);
+//            mailMessage.setTo(details.getRecipient());
+//            mailMessage.setText(details.getMsgBody());
+//            mailMessage.setSubject(details.getSubject());
+//
+//            // Sending the mail
+//            javaMailSender.send(mailMessage);
+            System.out.println("SEND MAIL SUCCESS");
             return "Mail Sent Successfully...";
         }
 
         // Catch block to handle the exceptions
         catch (Exception e) {
+            System.out.println("SEND MAIL FAIL");
+        e.printStackTrace();
             return "Error while Sending Mail";
         }
     }

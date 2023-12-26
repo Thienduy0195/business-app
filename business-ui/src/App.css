@@ -1,5 +1,17 @@
-.logo-color{
-  background: #F66E00;
+.logo-color {
+  background: #f66e00;
 }
 
+@media screen and (max-width: 540px) {
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+  .formImage {
+    width: 150px;
+  }
 
+  .commonForm {
+    width: 320px;
+  }
+}

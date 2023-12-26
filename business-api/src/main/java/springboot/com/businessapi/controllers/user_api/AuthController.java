@@ -12,6 +12,7 @@ import springboot.com.businessapi.dto.authen_dto.AuthResponse;
 import springboot.com.businessapi.dto.authen_dto.LoginRequest;
 import springboot.com.businessapi.dto.authen_dto.ResetPasswordRequest;
 import springboot.com.businessapi.dto.authen_dto.SignUpRequest;
+import springboot.com.businessapi.dto.mail.EmailDetails;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.exception_handler.DuplicatedUserInfoException;
 import springboot.com.businessapi.mapper.UserMapper;
@@ -58,8 +59,13 @@ public class AuthController {
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        String response = userService.forgotPassword(email);
-        return "/reset-password?token=" + response;
+        String response = "/reset-password?token=" + userService.forgotPassword(email);
+        EmailDetails emailDetails = new EmailDetails();
+        emailDetails.setRecipient("thienduy0195@gmail.com");
+        emailDetails.setSubject("TEST");
+        emailDetails.setMsgBody("<h5><h5/>");
+        emailSender.sendSimpleMail(emailDetails);
+        return response;
     }
 
     @PostMapping("/reset-password")

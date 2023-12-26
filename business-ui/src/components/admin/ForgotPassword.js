@@ -41,7 +41,7 @@ function ForgotPassword() {
 
         try {
             const response = await businessApi.forgotPassword(email)
- 
+
             console.log("RESPONE RS", response);
 
             navigate(response.data);
@@ -61,41 +61,48 @@ function ForgotPassword() {
             <div className="loginImage text-center mt-5">
                 <img src={forgotPassImg} width="220" style={{ position: 'relative' }} alt="login" />
             </div>
+            <div className='center'>
 
-            <Grid textAlign='center'>
+                <div className='commonForm'>
+                    <Grid textAlign='center'>
 
-                <Grid.Column style={{ maxWidth: 400 }}>
-                    <div className='info-field'>
-                        <h5>Please enter your email to update new password..</h5>
-                    </div>
-                    <Form size='large' onSubmit={handleSubmit}>
-                        <Segment>
-                            <Form.Input
-                                fluid
-                                autoFocus
-                                name='email'
-                                action={{
-                                    icon: 'user',
-                                    disabled: true,
-                                  }}
-                                  actionPosition='left'
-                                // icon='user'
-                                // iconPosition='left'
-                                placeholder='Enter your email...'
-                                type='email'
-                                onChange={handleInputChange}
-                            />
+                        <Grid.Column style={{ maxWidth: 400 }}>
+                            <div className='info-field'>
+                                <h5>Enter your email to update new password..</h5>
+                            </div>
+                            <Form size='large' onSubmit={handleSubmit}>
+                                <Segment>
+                                    <Form.Input
+                                        fluid
+                                        autoFocus
+                                        name='email'
+                                        action={{
+                                            icon: 'user',
+                                            disabled: true,
+                                        }}
+                                        actionPosition='left'
+                                        // icon='user'
+                                        // iconPosition='left'
+                                        placeholder='Enter your email...'
+                                        type='email'
+                                        onChange={handleInputChange}
+                                    />
 
-                            <Button color='orange' fluid size='large' disabled={isDisable}>Reset my password</Button>
-                        </Segment>
-                    </Form>
+                                    <Button color='orange' fluid size='large' disabled={isDisable}>Reset my password</Button>
+                                </Segment>
+                            </Form>
 
-                    {isError && <Message negative><span>The email is invalid, please try again!</span></Message>}
+                            {isError && <Message negative><span>The email is incorrect, please try again!</span></Message>}
 
-                    <Divider horizontal >have a nice day !</Divider>
+                            <Divider horizontal >have a nice day !</Divider>
 
-                </Grid.Column>
-            </Grid>
+                        </Grid.Column>
+                    </Grid>
+
+                </div>
+            </div>
+
+
         </div>
     )
 }

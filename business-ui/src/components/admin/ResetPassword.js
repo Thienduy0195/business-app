@@ -13,13 +13,13 @@ import resetImg from '../../assets/images/reset-pass.png'
 
 const ValidationSchema = Yup.object().shape({
     password: Yup.string()
-    .min(3, 'At least 3 characters!')
-    .max(35, 'Max 35 characters!')
-    .required('Required!'),
+        .min(3, 'At least 3 characters!')
+        .max(35, 'Max 35 characters!')
+        .required('Required!'),
     confirmPassword: Yup.string()
-    .min(3, 'At least 3 characters!')
-    .max(35, 'Max 35 characters!')
-    .required('Required!'),
+        .min(3, 'At least 3 characters!')
+        .max(35, 'Max 35 characters!')
+        .required('Required!'),
 });
 
 function ResetPassword() {
@@ -72,7 +72,7 @@ function ResetPassword() {
                 const data = parseJwt(accessToken)
                 const authenticatedUser = { data, accessToken }
 
-    
+
 
                 setIsError(false)
             } catch (error) {
@@ -88,7 +88,7 @@ function ResetPassword() {
         <div>
 
             <div className="loginImage text-center mt-5">
-                <img src={resetImg} width="220" style={{ position: 'relative' }} alt="login" />
+                <img className='formImage' src={resetImg} width="220" style={{ position: 'relative' }} alt="login" />
             </div>
 
             <div className="mb-3 text-center ">
@@ -96,87 +96,92 @@ function ResetPassword() {
                 <h2>Reset your password ~</h2>
             </div>
 
-            <Grid textAlign='center'>
+            <div className='center'>
+                <div className='commonForm'>
 
-                <Grid.Column style={{ maxWidth: 400 }}>
-                    <Form size='large' onSubmit={formik.handleSubmit}>
-                        <Segment>
-                     
-                            <div className='reset-password d-flex justify-content-between'>
-                                <div>
-                                <h4>Enter new password</h4>
-                                </div>
-                                <div className='text-danger'>
-                                {formik.errors.password ? (
-                                    <div>{formik.errors.password}</div>
-                                    ) : null}
-                                </div>
-                            </div>
+                    <Grid textAlign='center'>
 
-                            <Form.Input
-                                name='password'
-                                type={passwordVisible ? 'text' : 'password'}
-                                icon={
-                                    <Icon
-                                        name={passwordVisible ? 'eye' : 'eye slash'}
-                                        link
-                                        onClick={togglePasswordVisibility}
+                        <Grid.Column style={{ maxWidth: 400 }}>
+                            <Form size='large' onSubmit={formik.handleSubmit}>
+                                <Segment>
+
+                                    <div className='reset-password d-flex justify-content-between'>
+                                        <div>
+                                            <h4>Enter new password</h4>
+                                        </div>
+                                        <div className='text-danger'>
+                                            {formik.errors.password ? (
+                                                <div>{formik.errors.password}</div>
+                                            ) : null}
+                                        </div>
+                                    </div>
+
+                                    <Form.Input
+                                        name='password'
+                                        type={passwordVisible ? 'text' : 'password'}
+                                        icon={
+                                            <Icon
+                                                name={passwordVisible ? 'eye' : 'eye slash'}
+                                                link
+                                                onClick={togglePasswordVisibility}
+                                            />
+                                        }
+                                        fluid
+
+                                        iconPosition='right'
+                                        action={{
+                                            icon: 'lock',
+                                            disabled: true,
+                                        }}
+                                        actionPosition='left'
+                                        placeholder='New password...'
+                                        onChange={formik.handleChange}
+                                        value={formik.values.password}
                                     />
-                                }
-                                fluid
 
-                                iconPosition='right'
-                                action={{
-                                    icon: 'lock',
-                                    disabled: true,
-                                }}
-                                actionPosition='left'
-                                placeholder='New password...'
-                                onChange={formik.handleChange}
-                                value={formik.values.password}
-                            />
+                                    <div className='reset-password d-flex justify-content-between'>
+                                        <div>
+                                            <h4>Confirm new password</h4>
+                                        </div>
+                                        <div className='text-danger'>
+                                            {formik.errors.confirmPassword ? (
+                                                <div>{formik.errors.confirmPassword}</div>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                    <Form.Input
+                                        name='confirmPassword'
+                                        type={passwordVisible ? 'text' : 'password'}
+                                        icon={
+                                            <Icon
+                                                name={passwordVisible ? 'eye' : 'eye slash'}
+                                                link
+                                                onClick={togglePasswordVisibility}
+                                            />
+                                        }
+                                        fluid
 
-                            <div className='reset-password d-flex justify-content-between'>
-                                <div>
-                                <h4>Confirm new password</h4>
-                                </div>
-                                <div className='text-danger'>
-                                {formik.errors.confirmPassword ? (
-                                    <div>{formik.errors.confirmPassword}</div>
-                                    ) : null}
-                                </div>
-                            </div>
-                            <Form.Input
-                                name='confirmPassword'
-                                type={passwordVisible ? 'text' : 'password'}
-                                icon={
-                                    <Icon
-                                        name={passwordVisible ? 'eye' : 'eye slash'}
-                                        link
-                                        onClick={togglePasswordVisibility}
+                                        iconPosition='right'
+                                        action={{
+                                            icon: 'lock',
+                                            disabled: true,
+                                        }}
+                                        actionPosition='left'
+                                        placeholder='Confirm password...'
+                                        onChange={formik.handleChange}
+                                        value={formik.values.confirmPassword}
                                     />
-                                }
-                                fluid
 
-                                iconPosition='right'
-                                action={{
-                                    icon: 'lock',
-                                    disabled: true,
-                                }}
-                                actionPosition='left'
-                                placeholder='Confirm password...'
-                                onChange={formik.handleChange}
-                                value={formik.values.confirmPassword}
-                            />
+                                    <Button color='orange' fluid size='large' type='submit'>Confirm</Button>
+                                </Segment>
+                            </Form>
 
-                            <Button color='orange' fluid size='large' type='submit'>Confirm</Button>
-                        </Segment>
-                    </Form>
-
-                    {isError && <Message negative>{message}</Message>}
-                    <Divider horizontal>have a nice day !</Divider>
-                </Grid.Column>
-            </Grid>
+                            {isError && <Message negative>{message}</Message>}
+                            <Divider horizontal>have a nice day !</Divider>
+                        </Grid.Column>
+                    </Grid>
+                </div>
+            </div>
         </div>
     )
 }
