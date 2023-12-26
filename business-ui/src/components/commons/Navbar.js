@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { HamburgetMenuClose, HamburgetMenuOpen } from "./Icons";
-import amigo from '../../assets/images/amigo.png'
+import silva from '../../assets/images/silva.png'
 
 function NavBar() {
   const [click, setClick] = useState(false);
@@ -12,9 +12,9 @@ function NavBar() {
     <>
       <nav className="navbar">
         <div className="nav-container row">
-          <div className="col-3 navbar-logo mb-2">
+          <div className="col-3 navbar-logo">
             <NavLink exact to="/login" className="nav-logo">
-              <img src={amigo} width={200} style={{ position: 'relative' }} alt="login" />
+              <img src={silva} width={168} style={{ position: 'relative' }} alt="login" />
             </NavLink>
           </div>
           <div className="col-6 d-flex justify-content-center">

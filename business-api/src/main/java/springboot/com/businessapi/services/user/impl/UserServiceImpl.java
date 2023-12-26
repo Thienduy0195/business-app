@@ -2,13 +2,11 @@ package springboot.com.businessapi.services.user.impl;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.exception_handler.UserNotFoundException;
 import springboot.com.businessapi.repositories.user.IUserRepository;
 import springboot.com.businessapi.services.user.IUserService;
-
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,18 +14,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
     private static final long EXPIRE_TOKEN = 30;
 
-    private IUserRepository userRepository;
-
-    @Autowired
-    public UserServiceImpl(IUserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final IUserRepository userRepository;
 
     @Override
     public List<User> getUsers() {
@@ -70,49 +64,48 @@ public class UserServiceImpl implements IUserService {
         userRepository.delete(user);
     }
 
-    public String forgotPass(String email) {
+    public String forgotPassword(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
-        if (!userOptional.isPresent()) {
-            return "The email is incorrect, please try again!";
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException("USER NOT FOUND BY EMAIL");
         }
 
         User user = userOptional.get();
-        user.setToken(generateToken());
+        user.setToken(generateResetPasswordToken());
         user.setTokenCreationDate(LocalDateTime.now());
 
         user = userRepository.save(user);
         return user.getToken();
     }
 
-    public String resetPass(String token, String password) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByToken(token));
+    public String resetPassword(User user) {
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByToken(user.getToken()));
 
-        if (!userOptional.isPresent()) {
-            return "Invalid token";
+        if (userOptional.isEmpty()) {
+            return "INVALID TOKEN.";
         }
         LocalDateTime tokenCreationDate = userOptional.get().getTokenCreationDate();
 
         if (isTokenExpired(tokenCreationDate)) {
-            return "Token expired.";
-
+            return "TOKEN EXPIRED.";
         }
 
-        User user = userOptional.get();
+        User userUpdate = userOptional.get();
 
-        user.setPassword(password);
-        user.setToken(null);
-        user.setTokenCreationDate(null);
+        userUpdate.setPassword(user.getPassword());
+        userUpdate.setToken(null);
+        userUpdate.setTokenCreationDate(null);
 
-        userRepository.save(user);
+        userRepository.save(userUpdate);
 
-        return "Your password successfully updated.";
+        return "UPDATE PASSWORD SUCCESSFULLY.";
     }
 
-    private String generateToken() {
+    private String generateResetPasswordToken() {
         StringBuilder token = new StringBuilder();
-        return token.append(UUID.randomUUID().toString())
-                .append(UUID.randomUUID().toString()).toString();
+        return token.append(UUID.randomUUID())
+                .append(UUID.randomUUID()).toString();
     }
 
     private boolean isTokenExpired(final LocalDateTime tokenCreationDate) {

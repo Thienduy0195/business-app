@@ -60,6 +60,8 @@ function Login() {
         const data = parseJwt(accessToken)
         const authenticatedUser = { data, accessToken }
 
+        console.log("parseJwt(accessToken)", data);
+
         Auth.userLogin(authenticatedUser)
 
         setIsError(false)
@@ -78,7 +80,7 @@ function Login() {
   return (
     <div>
 
-      <div className="loginImage text-center ">
+      <div className="loginImage text-center mt-5">
         <img src={loginImg} width="220" style={{ position: 'relative' }} alt="login" />
       </div>
 
@@ -99,6 +101,8 @@ function Login() {
                 name='username'
                 action={{
                   icon: 'user',
+                  disabled: true,
+                  // color: 'purple'
                 }}
                 actionPosition='left'
                 id="username"
@@ -124,10 +128,11 @@ function Login() {
                   />
                 }
                 fluid
-
                 iconPosition='right'
                 action={{
                   icon: 'lock',
+                  disabled: true,
+                  // color: 'purple'
                 }}
                 actionPosition='left'
                 placeholder='Password'
@@ -135,7 +140,7 @@ function Login() {
                 value={formik.values.password}
               />
 
-              <Button color='purple' fluid size='large' type='submit'>Login</Button>
+              <Button color='orange' fluid size='large' type='submit'>Login</Button>
             </Segment>
           </Form>
           <div className='mt-3 d-flex text-start'>

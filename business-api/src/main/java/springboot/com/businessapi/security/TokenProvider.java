@@ -77,6 +77,6 @@ public class TokenProvider {
     }
 
     public static final String TOKEN_TYPE = "JWT";
-    public static final String TOKEN_ISSUER = "order-api";
-    public static final String TOKEN_AUDIENCE = "order-app";
+    public static final String TOKEN_ISSUER = "business-api";
+    public static final String TOKEN_AUDIENCE = "business-app";
 }

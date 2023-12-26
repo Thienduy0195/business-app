@@ -1,4 +1,4 @@
-package springboot.com.businessapi.rest_api.user_api;
+package springboot.com.businessapi.controllers.user_api;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,7 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.mapper.UserMapper;
-import springboot.com.businessapi.rest_api.dto.user_dto.UserDto;
+import springboot.com.businessapi.dto.user_dto.UserDto;
 import springboot.com.businessapi.security.CustomUserDetails;
 import springboot.com.businessapi.services.user.IUserService;
 
@@ -22,7 +22,6 @@ import static springboot.com.businessapi.config.SwaggerConfig.BEARER_KEY_SECURIT
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
 
     private final IUserService userService;
 

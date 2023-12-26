@@ -1,4 +1,4 @@
-package springboot.com.businessapi.rest_api;
+package springboot.com.businessapi.controllers;
 
 
 import lombok.RequiredArgsConstructor;

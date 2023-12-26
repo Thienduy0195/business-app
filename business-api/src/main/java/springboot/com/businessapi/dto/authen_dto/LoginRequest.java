@@ -1,4 +1,4 @@
-package springboot.com.businessapi.rest_api.dto.authen_dto;
+package springboot.com.businessapi.dto.authen_dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

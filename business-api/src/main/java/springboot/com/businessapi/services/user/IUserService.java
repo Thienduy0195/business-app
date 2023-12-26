@@ -24,7 +24,7 @@ public interface IUserService {
 
     void deleteUser(User user);
 
-    String forgotPass(String email);
+    String forgotPassword(String email);
 
-    String resetPass(String token, String password);
+    String resetPassword(User user);
 }

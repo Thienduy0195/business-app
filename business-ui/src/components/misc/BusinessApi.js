@@ -10,7 +10,8 @@ export const businessApi = {
     numberOfUsers,
     getUsers,
     deleteUser,
-    forgotPassword
+    forgotPassword,
+    changePassword
 }
 
 function authenticate(username, password) {
@@ -44,6 +45,12 @@ function deleteUser(user, username) {
 
 function forgotPassword(email) {
     return instance.post('/auth/forgot-password', { email }, {
+        headers: { 'Content-type': 'application/json' }
+    })
+}
+
+function changePassword(password, token) {
+    return instance.post('/auth/reset-password', { token, password  }, {
         headers: { 'Content-type': 'application/json' }
     })
 }

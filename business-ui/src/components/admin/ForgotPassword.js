@@ -41,20 +41,9 @@ function ForgotPassword() {
 
         try {
             const response = await businessApi.forgotPassword(email)
-            if (response.data.startsWith('The email')) {
-                setMessage(response.data);
-                setIsError(true);
-                return
-            } else {
-                setIsError(false);
-            }
-
-
+ 
             console.log("RESPONE RS", response);
 
-
-            // Somewhere in your code, e.g. inside a handler:
-            // navigate(response.data);
             navigate(response.data);
         } catch (error) {
             handleLogError(error)
@@ -69,7 +58,7 @@ function ForgotPassword() {
     return (
         <div>
 
-            <div className="loginImage text-center mt-3">
+            <div className="loginImage text-center mt-5">
                 <img src={forgotPassImg} width="220" style={{ position: 'relative' }} alt="login" />
             </div>
 
@@ -77,7 +66,7 @@ function ForgotPassword() {
 
                 <Grid.Column style={{ maxWidth: 400 }}>
                     <div className='info-field'>
-                        <h5>Please enter your email to update the new password..</h5>
+                        <h5>Please enter your email to update new password..</h5>
                     </div>
                     <Form size='large' onSubmit={handleSubmit}>
                         <Segment>
@@ -85,20 +74,25 @@ function ForgotPassword() {
                                 fluid
                                 autoFocus
                                 name='email'
-                                icon='user'
-                                iconPosition='left'
-                                placeholder='Enter your email'
+                                action={{
+                                    icon: 'user',
+                                    disabled: true,
+                                  }}
+                                  actionPosition='left'
+                                // icon='user'
+                                // iconPosition='left'
+                                placeholder='Enter your email...'
                                 type='email'
                                 onChange={handleInputChange}
                             />
 
-                            <Button color='purple' fluid size='large' disabled={isDisable}>Reset my password</Button>
+                            <Button color='orange' fluid size='large' disabled={isDisable}>Reset my password</Button>
                         </Segment>
                     </Form>
 
-                    {isError && <Message negative>{message}</Message>}
+                    {isError && <Message negative><span>The email is invalid, please try again!</span></Message>}
 
-                    <Divider horizontal>have a nice day !</Divider>
+                    <Divider horizontal >have a nice day !</Divider>
 
                 </Grid.Column>
             </Grid>

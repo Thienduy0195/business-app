@@ -1,21 +1,23 @@
 package springboot.com.businessapi.mapper;
 
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import springboot.com.businessapi.dto.authen_dto.ResetPasswordRequest;
 import springboot.com.businessapi.entities.user.User;
-import springboot.com.businessapi.rest_api.dto.authen_dto.SignUpRequest;
-import springboot.com.businessapi.rest_api.dto.user_dto.UserDto;
+import springboot.com.businessapi.dto.authen_dto.SignUpRequest;
+import springboot.com.businessapi.dto.user_dto.UserDto;
 import springboot.com.businessapi.security.WebSecurityConfig;
 import springboot.com.businessapi.security.oauth2.OAuth2Provider;
 
-
+@RequiredArgsConstructor
 @Service
 public class UserMapperImpl implements UserMapper {
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private ModelMapper modelMapper;
 
     @Autowired
@@ -40,6 +42,13 @@ public class UserMapperImpl implements UserMapper {
         user.setRole(WebSecurityConfig.ADMIN);
         user.setProvider(OAuth2Provider.LOCAL);
         System.out.println(user.toString());
+        return user;
+    }
+
+    @Override
+    public User mapResetPasswordRequestToUser(ResetPasswordRequest resetPasswordRequest) {
+        User user = modelMapper.map(resetPasswordRequest, User.class);
+        user.setPassword(passwordEncoder.encode(resetPasswordRequest.getPassword()));
         return user;
     }
 }

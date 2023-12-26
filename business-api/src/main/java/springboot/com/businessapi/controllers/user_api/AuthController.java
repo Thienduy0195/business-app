@@ -1,4 +1,4 @@
-package springboot.com.businessapi.rest_api.user_api;
+package springboot.com.businessapi.controllers.user_api;
 
 
 import jakarta.validation.Valid;
@@ -8,12 +8,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springboot.com.businessapi.dto.authen_dto.AuthResponse;
+import springboot.com.businessapi.dto.authen_dto.LoginRequest;
+import springboot.com.businessapi.dto.authen_dto.ResetPasswordRequest;
+import springboot.com.businessapi.dto.authen_dto.SignUpRequest;
+import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.exception_handler.DuplicatedUserInfoException;
 import springboot.com.businessapi.mapper.UserMapper;
-import springboot.com.businessapi.rest_api.dto.authen_dto.AuthResponse;
-import springboot.com.businessapi.rest_api.dto.authen_dto.LoginRequest;
-import springboot.com.businessapi.rest_api.dto.authen_dto.SignUpRequest;
 import springboot.com.businessapi.security.TokenProvider;
+import springboot.com.businessapi.services.mail.IEmailSenderService;
 import springboot.com.businessapi.services.user.IUserService;
 
 import java.util.Map;
@@ -27,6 +30,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
     private final UserMapper userMapper;
+    private final IEmailSenderService emailSender;
 
     @PostMapping("/authenticate")
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -50,25 +54,24 @@ public class AuthController {
         return new AuthResponse(token);
     }
 
+
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String response = userService.forgotPassword(email);
+        return "/reset-password?token=" + response;
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
+        User user = userMapper.mapResetPasswordRequestToUser(resetPasswordRequest);
+        return userService.resetPassword(user);
+    }
+
+
     private String authenticateAndGetToken(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         return tokenProvider.generate(authentication);
-    }
-
-    @PostMapping("/forgot-password")
-    public String forgotPass(@RequestBody Map<String, String> request){
-        String email =  request.get("email");
-        String response = userService.forgotPass(email);
-
-        if(!response.startsWith("The email")){
-            response= "/reset-password?token=" + response;
-        }
-        return response;
-    }
-
-    @PutMapping("/reset-password")
-    public String resetPass(@RequestParam String token, @RequestParam String password){
-        return userService.resetPass(token,password);
     }
 
 
