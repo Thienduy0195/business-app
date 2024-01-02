@@ -33,6 +33,11 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -64,7 +69,6 @@ function Login() {
 
         Auth.userLogin(authenticatedUser)
 
-
         setIsError(false)
       } catch (error) {
         handleLogError(error)
@@ -78,10 +82,13 @@ function Login() {
     return <Navigate to='/' />
   }
 
+
+
+
   return (
     <div>
 
-      <div className="loginImage text-center mt-5">
+      <div className="loginImage text-center">
         <img className='formImage' src={loginImg} width="220" style={{ position: 'relative' }} alt="login" />
       </div>
       <div className='center'>
@@ -103,10 +110,18 @@ function Login() {
                     name='username'
                     action={{
                       icon: 'user',
-                      disabled: true,
-                      // color: 'purple'
+                      // disabled: true,
+                      tabIndex: -1,
+                      // color: 'orange'
+                      style: {
+                        background: '#F2711C',
+                        opacity: '50%',
+                        color: 'white'
+                      },
+
                     }}
                     actionPosition='left'
+                    actionDisabled='true'
                     id="username"
                     type="text"
                     placeholder='Username'
@@ -133,8 +148,14 @@ function Login() {
                     iconPosition='right'
                     action={{
                       icon: 'lock',
-                      disabled: true,
-                      // color: 'purple'
+                      // disabled: true,
+                      tabIndex: -1,
+                      // color: 'orange'
+                      style: {
+                        background: '#F2711C',
+                        opacity: '50%',
+                        color: 'white'
+                      },
                     }}
                     actionPosition='left'
                     placeholder='Password'
@@ -145,6 +166,7 @@ function Login() {
                   <Button color='orange' fluid size='large' type='submit'>Login</Button>
                 </Segment>
               </Form>
+
               <div className='mt-3 d-flex text-start'>
                 <div className='col-6'>
                   <Form.Field>

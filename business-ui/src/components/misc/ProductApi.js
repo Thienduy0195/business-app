@@ -6,13 +6,14 @@ export const productApi = {
     getProductList,
 }
 
-
-function getProductList() {
+function getProductList(params) {
     const url = '/products/list'
-    return instance.get(url).then((response) => {
-        return response.data;
+    return instance.get(url, { params }).then((response) => {
+        // console.log("HERE", response);
+        return response;
     })
 }
+
 
 // -- Axios
 

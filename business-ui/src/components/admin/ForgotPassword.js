@@ -58,7 +58,7 @@ function ForgotPassword() {
     return (
         <div>
 
-            <div className="loginImage text-center mt-5">
+            <div className="loginImage text-center">
                 <img src={forgotPassImg} width="220" style={{ position: 'relative' }} alt="login" />
             </div>
             <div className='center'>
@@ -78,11 +78,16 @@ function ForgotPassword() {
                                         name='email'
                                         action={{
                                             icon: 'user',
-                                            disabled: true,
+                                            tabIndex: -1,
+                                            // color: 'orange'
+                                            style: {
+                                                background: '#F2711C',
+                                                opacity: '50%',
+                                                color: 'white'
+                                            },
                                         }}
                                         actionPosition='left'
-                                        // icon='user'
-                                        // iconPosition='left'
+
                                         placeholder='Enter your email...'
                                         type='email'
                                         onChange={handleInputChange}

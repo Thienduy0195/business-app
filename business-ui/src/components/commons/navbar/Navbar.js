@@ -12,14 +12,14 @@ function NavBar() {
     <>
       <nav className="navbar">
         <div className="nav-container row">
-          <div className="col-3 navbar-logo">
+          <div className="col-2 navbar-logo">
             <NavLink exact to="/login" className="nav-logo">
               <img src={silva} width={168} style={{ position: 'relative' }} alt="login" />
             </NavLink>
           </div>
-          <div className="col-6 d-flex justify-content-center">
+          <div className="col-8 d-flex justify-content-center">
             <div>
-              <ul className={click ? "nav-menu active" : "nav-menu"}>
+              <ul className={click ? "nav-menu active" : "nav-menu"} style={{ marginBottom: "0 !important;" }}>
                 <li className="nav-item">
                   <NavLink
                     exact
@@ -28,7 +28,7 @@ function NavBar() {
                     className="nav-links"
                     onClick={handleClick}
                   >
-                    Home
+                    Trái cây sạch
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -39,7 +39,40 @@ function NavBar() {
                     className="nav-links"
                     onClick={handleClick}
                   >
-                    About us
+                    Trái cây sạch
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    exact
+                    to="/blog"
+                    activeClassName="active"
+                    className="nav-links"
+                    onClick={handleClick}
+                  >
+                    Trái cây sạch
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    exact
+                    to="/blog"
+                    activeClassName="active"
+                    className="nav-links"
+                    onClick={handleClick}
+                  >
+                    News
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    exact
+                    to="/blog"
+                    activeClassName="active"
+                    className="nav-links"
+                    onClick={handleClick}
+                  >
+                    Trái cây sạch
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -67,7 +100,7 @@ function NavBar() {
               </ul>
             </div>
           </div>
-          <div className="col-3">
+          <div className="col-2">
 
             <div className="nav-icon" onClick={handleClick}>
               <span className="icon">

@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #FEF1F1;
+  background-color: #fef1f1;
   box-shadow: 0 2px 6px rgba(44, 34, 34, 0.1); /* Shadow: offset-x | offset-y | blur-radius | color */
   height: 70px;
   display: flex;
@@ -21,6 +21,10 @@
   position: relative;
 }
 
+ul {
+  margin-bottom: 0 !important;
+}
+
 .nav-logo {
   cursor: pointer;
   margin-left: 1rem;
@@ -34,11 +38,11 @@
   display: flex;
   list-style: none;
   text-align: center;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
 }
 
 .nav-links {
-  color: #E96C19;
+  color: #e96c19;
   font-weight: bold;
   text-decoration: none;
   padding: 0.5rem 1rem;
@@ -75,7 +79,7 @@
 
 .nav-icon {
   display: none;
-  color: #316B62;
+  color: #316b62;
 }
 
 .nav-icon .icon {
@@ -98,7 +102,7 @@
   }
 
   .nav-menu.active {
-    background: #FEF1F1;
+    background: #fef1f1;
     left: 0px;
     opacity: 1;
     transition: all 0.5s ease;
@@ -128,6 +132,6 @@
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-    color: #E96C19;
+    color: #e96c19;
   }
 }

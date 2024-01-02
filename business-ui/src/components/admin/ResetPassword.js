@@ -87,11 +87,11 @@ function ResetPassword() {
     return (
         <div>
 
-            <div className="loginImage text-center mt-5">
+            <div className="loginImage text-center">
                 <img className='formImage' src={resetImg} width="220" style={{ position: 'relative' }} alt="login" />
             </div>
 
-            <div className="mb-3 text-center ">
+            <div className="mb-2 text-center ">
                 {/* <img src={resetPassImg} width="150" style={{ position: 'relative' }} alt="login" /> */}
                 <h2>Reset your password ~</h2>
             </div>
@@ -131,7 +131,13 @@ function ResetPassword() {
                                         iconPosition='right'
                                         action={{
                                             icon: 'lock',
-                                            disabled: true,
+                                            tabIndex: -1,
+                                            // color: 'orange'
+                                            style: {
+                                                background: '#F2711C',
+                                                opacity: '50%',
+                                                color: 'white'
+                                            },
                                         }}
                                         actionPosition='left'
                                         placeholder='New password...'
@@ -164,7 +170,13 @@ function ResetPassword() {
                                         iconPosition='right'
                                         action={{
                                             icon: 'lock',
-                                            disabled: true,
+                                            tabIndex: -1,
+                                            // color: 'orange'
+                                            style: {
+                                                background: '#F2711C',
+                                                opacity: '50%',
+                                                color: 'white'
+                                            },
                                         }}
                                         actionPosition='left'
                                         placeholder='Confirm password...'
