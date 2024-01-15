@@ -161,17 +161,6 @@ ProductService.updateProduct(formData)
   const [popupMessage, setPopupMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
-  // const saveOrUpdateProduct = async (e) => {
-  //     e.preventDefault();
-
-  //     if (!name || !price) {
-  //         setPopupMessage('Complete el nombre y el precio del producto.');
-  //         setShowPopup(true);
-  //         return;
-  //     }
-
-  // }
-
   return (
     <div className="add-product">
       <div className="add-product-form">

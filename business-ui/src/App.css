@@ -2,6 +2,11 @@
   background: #f66e00;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media screen and (max-width: 540px) {
   .center {
@@ -17,7 +22,7 @@
   }
 }
 
-.orange-text{
+.orange-text {
   color: #f16d00;
 }
 
