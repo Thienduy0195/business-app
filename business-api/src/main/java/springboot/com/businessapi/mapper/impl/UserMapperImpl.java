@@ -1,21 +1,23 @@
-package springboot.com.businessapi.mapper;
+package springboot.com.businessapi.mapper.impl;
 
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import springboot.com.businessapi.dto.authen_dto.ResetPasswordRequest;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.dto.authen_dto.SignUpRequest;
 import springboot.com.businessapi.dto.user_dto.UserDto;
+import springboot.com.businessapi.mapper.IUserMapper;
 import springboot.com.businessapi.security.WebSecurityConfig;
 import springboot.com.businessapi.security.oauth2.OAuth2Provider;
 
 @RequiredArgsConstructor
-@Service
-public class UserMapperImpl implements UserMapper {
+@Component
+public class UserMapperImpl implements IUserMapper {
 
     private final PasswordEncoder passwordEncoder;
     private ModelMapper modelMapper;

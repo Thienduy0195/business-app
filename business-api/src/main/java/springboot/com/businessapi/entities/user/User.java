@@ -32,6 +32,9 @@ public class User {
     private String role;
     private String imageUrl;
 
+    @Column(name = "user_flag")
+    private Byte userFlag;
+
     @Enumerated(EnumType.STRING)
     private OAuth2Provider provider;
 

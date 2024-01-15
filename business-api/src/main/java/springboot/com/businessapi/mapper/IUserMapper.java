@@ -6,7 +6,7 @@ import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.dto.authen_dto.SignUpRequest;
 import springboot.com.businessapi.dto.user_dto.UserDto;
 
-public interface UserMapper {
+public interface IUserMapper {
 
     UserDto toUserDto(User user);
 

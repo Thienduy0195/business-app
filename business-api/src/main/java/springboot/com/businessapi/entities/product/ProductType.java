@@ -22,7 +22,7 @@ public class ProductType {
     @Column(name = "pet_type_name", columnDefinition = "nvarchar(100)")
     private String productTypeName;
 
-    @OneToMany(mappedBy = "productType", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonBackReference
+    @OneToMany(mappedBy = "productType", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Product> products;
 }

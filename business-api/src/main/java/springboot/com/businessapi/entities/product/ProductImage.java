@@ -1,6 +1,6 @@
 package springboot.com.businessapi.entities.product;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +22,6 @@ public class ProductImage {
 
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @ManyToOne(targetEntity = Product.class)
-    @JsonBackReference
+    @JsonManagedReference
     private Product product;
 }

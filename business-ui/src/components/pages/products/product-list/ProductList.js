@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ProductItem from '../product-item/ProductItem';
+import ProductCard from '../product-card/ProductCard';
 import './product-list.css'
-import { productApi } from '../../../misc/ProductApi';
+import { ProductService } from '../../../misc/ProductService';
 import Pagination from "@material-ui/lab/Pagination";
 
 
@@ -9,7 +9,7 @@ const ProductList = () => {
 
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(3);
+    const [pageSize, setPageSize] = useState(30);
     const [count, setCount] = useState(0);
 
     const getRequestParams = (page, pageSize) => {
@@ -31,7 +31,7 @@ const ProductList = () => {
     const showProducts = () => {
         const params = getRequestParams(page, pageSize);
 
-        productApi.getProductList(params).then((response) => {
+        ProductService.getAllProducts(params).then((response) => {
             console.log("PRODUCTS", response.data);
             setProducts(response.data.content);
             setCount(response.data.totalPages);
@@ -45,16 +45,19 @@ const ProductList = () => {
 
 
     return (
-        <div className="container-fluid mt-3">
-            <div className='row product-list'>
+        <div className="container">
+            <div className='product-container'>
+            {/* <div className='row product-list'> */}
 
                 {products.map((product, index) => (
-                    <ProductItem
+                    <ProductCard
                         key={index}
                         name={product.name}
                         avatarURL={product.avatarURL}
                         title={product.title}
-                        mainPrice={product.mainPrice}
+                        retailPrice={product.retailPrice}
+                        discountPercent={product.discountPercent}
+                        salePrice={product.salePrice}
                     />
                 ))}
 

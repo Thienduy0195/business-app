@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springboot.com.businessapi.entities.user.User;
-import springboot.com.businessapi.mapper.UserMapper;
+import springboot.com.businessapi.mapper.IUserMapper;
 import springboot.com.businessapi.dto.user_dto.UserDto;
 import springboot.com.businessapi.security.CustomUserDetails;
 import springboot.com.businessapi.services.user.IUserService;
@@ -25,7 +25,7 @@ public class UserController {
 
     private final IUserService userService;
 
-    private final UserMapper userMapper;
+    private final IUserMapper userMapper;
 
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     @GetMapping("/me")
@@ -55,4 +55,10 @@ public class UserController {
         userService.deleteUser(user);
         return userMapper.toUserDto(user);
     }
+
+    @GetMapping("/numberOfUsers")
+    public Integer getNumberOfUsers() {
+        return userService.getUsers().size();
+    }
+
 }

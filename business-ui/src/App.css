@@ -2,6 +2,7 @@
   background: #f66e00;
 }
 
+
 @media screen and (max-width: 540px) {
   .center {
     display: flex;
@@ -14,4 +15,12 @@
   .commonForm {
     width: 320px;
   }
+}
+
+.orange-text{
+  color: #f16d00;
+}
+
+.displayNone {
+  display: none;
 }

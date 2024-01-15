@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { NavLink, Navigate, Link, useNavigate } from 'react-router-dom'
 import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
-import { useAuth } from '../context/AuthContext'
-import { parseJwt, getSocialLoginUrl, handleLogError } from '../misc/Helpers'
-import forgotPassImg from '../../assets/images/forgot-pass.png'
+import { useAuth } from '../../../context/AuthContext'
+import { parseJwt, getSocialLoginUrl, handleLogError } from '../../../misc/Helpers'
+import forgotPassImg from '../../../../assets/images/forgot-pass.png'
 import './forgot-password.css'
-import { businessApi } from '../misc/BusinessApi'
+import { businessApi } from '../../../misc/BusinessApi'
 
 
 
@@ -59,7 +59,7 @@ function ForgotPassword() {
         <div>
 
             <div className="loginImage text-center">
-                <img src={forgotPassImg} width="220" style={{ position: 'relative' }} alt="login" />
+                <img className='formImage' src={forgotPassImg} width="220" style={{ position: 'relative' }} alt="login" />
             </div>
             <div className='center'>
 

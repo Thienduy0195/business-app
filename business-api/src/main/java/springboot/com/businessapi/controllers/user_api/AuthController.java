@@ -15,7 +15,7 @@ import springboot.com.businessapi.dto.authen_dto.SignUpRequest;
 import springboot.com.businessapi.dto.mail.EmailDetails;
 import springboot.com.businessapi.entities.user.User;
 import springboot.com.businessapi.exception_handler.DuplicatedUserInfoException;
-import springboot.com.businessapi.mapper.UserMapper;
+import springboot.com.businessapi.mapper.IUserMapper;
 import springboot.com.businessapi.security.TokenProvider;
 import springboot.com.businessapi.services.mail.IEmailSenderService;
 import springboot.com.businessapi.services.user.IUserService;
@@ -30,7 +30,7 @@ public class AuthController {
     private final IUserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
-    private final UserMapper userMapper;
+    private final IUserMapper userMapper;
     private final IEmailSenderService emailSender;
 
     @PostMapping("/authenticate")

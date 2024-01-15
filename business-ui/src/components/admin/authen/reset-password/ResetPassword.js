@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { NavLink, Navigate, Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
-import { useAuth } from '../context/AuthContext'
-import { parseJwt, getSocialLoginUrl, handleLogError } from '../misc/Helpers'
-import './login.css'
-import { businessApi } from '../misc/BusinessApi'
+import { parseJwt, handleLogError } from '../../../misc/Helpers'
+import './../login/login.css'
+import { businessApi } from '../../../misc/BusinessApi'
 
-import resetImg from '../../assets/images/reset-pass.png'
+import resetImg from '../../../../assets/images/reset-pass.png'
 
 
 const ValidationSchema = Yup.object().shape({

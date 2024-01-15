@@ -3,11 +3,11 @@ import { Navigate, Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
-import { useAuth } from '../context/AuthContext'
-import { parseJwt, getSocialLoginUrl, handleLogError } from '../misc/Helpers'
-import loginImg from '../../assets/images/login.png'
+import { useAuth } from '../../../context/AuthContext'
+import { parseJwt, getSocialLoginUrl, handleLogError } from '../../../misc/Helpers'
+import loginImg from '../../../../assets/images/login.png'
 import './login.css'
-import { businessApi } from '../misc/BusinessApi'
+import { businessApi } from '../../../misc/BusinessApi'
 
 
 //TẠM THỜI KHÔNG DÙNG CÁI ValidationSchema NÀY
