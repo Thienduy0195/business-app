@@ -186,7 +186,7 @@ const UpdateProduct = () => {
       <div className="add-product-form">
         <form onSubmit={handleSubmit}>
           <div className="title row">
-            <div className="col-8">
+            <div className="col-8 d-flex align-items-center">
               <h2>{title}</h2>
             </div>
             <div className="col-4 add-product-button">
