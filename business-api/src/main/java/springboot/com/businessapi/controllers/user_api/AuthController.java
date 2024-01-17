@@ -59,12 +59,16 @@ public class AuthController {
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        String response = "/reset-password?token=" + userService.forgotPassword(email);
-        EmailDetails emailDetails = new EmailDetails();
-        emailDetails.setRecipient("thienduy0195@gmail.com");
-        emailDetails.setSubject("TEST");
-        emailDetails.setMsgBody("<h5><h5/>");
-        emailSender.sendSimpleMail(emailDetails);
+        String response = "";
+        if(userService.existUserWithEmail(email)){
+            response = "/reset-password?token=" + userService.forgotPassword(email);
+            EmailDetails emailDetails = new EmailDetails();
+            emailDetails.setMailFrom("doctorcare.service@gmail.com");
+            emailDetails.setMailTo(email);
+            emailDetails.setMailSubject("SILVA FARM - RESET YOUR PASSWORD");
+            emailDetails.setMailContent(response);
+            emailSender.sendEmail(emailDetails);
+        }
         return response;
     }
 

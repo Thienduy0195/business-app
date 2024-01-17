@@ -5,6 +5,7 @@ import "./AddNewProduct.css";
 import ProductImages from "../product-images/ProductImages";
 import PopUp from "../pop-up-component/PopUpComponent";
 import { ProductService } from "../../../misc/ProductService";
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddNewProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -30,18 +31,18 @@ const AddNewProduct = () => {
   }, []);
 
   useEffect(() => {
-    if(itemId){
+    if (itemId) {
       ProductService.getProductById(itemId)
-      .then((res) => {
-        console.log("response", res);
-        setFormData(res.data)
-        const images = res.data.productImages;
-        let newImageList = images.map((obj) => {
-          return { status: "FINISH", downloadURL : obj.imageURL };
-        });
-        setProductImageList(newImageList)
-      })
-      .catch((err1) => console.error);
+        .then((res) => {
+          console.log("response", res);
+          setFormData(res.data);
+          const images = res.data.productImages;
+          let newImageList = images.map((obj) => {
+            return { status: "FINISH", downloadURL: obj.imageURL };
+          });
+          setProductImageList(newImageList);
+        })
+        .catch((err1) => console.error);
     }
   }, [itemId]);
 
@@ -151,11 +152,9 @@ const AddNewProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit formData", formData);
-if(!itemId){
-  ProductService.createProduct(formData);
-}else{
-ProductService.updateProduct(formData)
-}
+    ProductService.createProduct(formData)
+    // .then()
+    // .catch((err) => toast.error("CREATE FAILED!"));
   };
 
   const [popupMessage, setPopupMessage] = useState("");

@@ -6,7 +6,7 @@ import "../add-new-product/AddNewProduct.css";
 import ProductImages from "../product-images/ProductImages";
 import PopUp from "../pop-up-component/PopUpComponent";
 import { ProductService } from "../../../misc/ProductService";
-import { Alert } from "bootstrap";
+// import { toast } from "react-toastify";
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -163,11 +163,8 @@ const UpdateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit formData", formData);
-    if (!itemId) {
-      ProductService.createProduct(formData);
-    } else {
-      ProductService.updateProduct(formData);
-    }
+    ProductService.updateProduct(formData);
+    navigate("/add")
   };
 
   const [popupMessage, setPopupMessage] = useState("");

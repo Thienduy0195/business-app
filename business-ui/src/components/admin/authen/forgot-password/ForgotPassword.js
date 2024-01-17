@@ -44,7 +44,7 @@ function ForgotPassword() {
 
             console.log("RESPONE RS", response);
 
-            navigate(response.data);
+            navigate("/login");
         } catch (error) {
             handleLogError(error)
             setIsError(true)
