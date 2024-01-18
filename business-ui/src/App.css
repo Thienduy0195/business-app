@@ -8,6 +8,10 @@
   align-items: center;
 }
 
+.authenForm {
+  width: 400px;
+}
+
 @media screen and (max-width: 540px) {
   .center {
     display: flex;
@@ -17,7 +21,7 @@
     width: 150px;
   }
 
-  .commonForm {
+  .authenForm {
     width: 320px;
   }
 }

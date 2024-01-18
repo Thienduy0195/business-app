@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { NavLink, Navigate, Link, useNavigate } from 'react-router-dom'
-import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom'
+import { Button, Form, Grid, Segment, Message, Divider} from 'semantic-ui-react'
 import { useAuth } from '../../../context/AuthContext'
-import { parseJwt, getSocialLoginUrl, handleLogError } from '../../../misc/Helpers'
+import { handleLogError } from '../../../misc/Helpers'
 import forgotPassImg from '../../../../assets/images/forgot-pass.png'
 import './forgot-password.css'
 import { businessApi } from '../../../misc/BusinessApi'
@@ -51,9 +51,9 @@ function ForgotPassword() {
         }
     }
 
-    // if (isLoggedIn) {
-    //   return <Navigate to='/' />
-    // }
+    if (isLoggedIn) {
+        navigate("/")
+    }
 
     return (
         <div>
@@ -63,7 +63,7 @@ function ForgotPassword() {
             </div>
             <div className='center'>
 
-                <div className='commonForm'>
+                <div className='authenForm'>
                     <Grid textAlign='center'>
 
                         <Grid.Column style={{ maxWidth: 400 }}>

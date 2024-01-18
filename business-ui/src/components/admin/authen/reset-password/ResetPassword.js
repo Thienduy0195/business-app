@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
+import { Button, Form, Grid, Icon, Segment, Message, Divider } from 'semantic-ui-react'
 import { parseJwt, handleLogError } from '../../../misc/Helpers'
 import './../login/login.css'
 import { businessApi } from '../../../misc/BusinessApi'
@@ -67,12 +67,8 @@ function ResetPassword() {
                 const response = await businessApi.changePassword(values.password, tokenResetPassword)
                 console.log("response", response);
                 const { accessToken } = response.data
-
+                console.log("data reset", response.data);
                 const data = parseJwt(accessToken)
-                const authenticatedUser = { data, accessToken }
-
-
-
                 setIsError(false)
             } catch (error) {
                 handleLogError(error)
@@ -96,7 +92,7 @@ function ResetPassword() {
             </div>
 
             <div className='center'>
-                <div className='commonForm'>
+                <div className='authenForm'>
 
                     <Grid textAlign='center'>
 

@@ -12,7 +12,7 @@ const UpdateProduct = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
-  const [isDisabled, setIsDisabled] = useState(true)
+  // const [isDisabled, setIsDisabled] = useState(true)
 
   const [productImageList, setProductImageList] = useState([]);
   const { itemId } = useParams();

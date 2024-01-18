@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
@@ -92,11 +91,9 @@ public class UserServiceImpl implements IUserService {
         }
 
         User userUpdate = userOptional.get();
-
         userUpdate.setPassword(user.getPassword());
         userUpdate.setToken(null);
         userUpdate.setTokenCreationDate(null);
-
         userRepository.save(userUpdate);
 
         return "UPDATE PASSWORD SUCCESSFULLY.";

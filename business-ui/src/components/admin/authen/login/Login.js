@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, Form, Grid, Icon, Segment, Menu, Message, Divider, Checkbox } from 'semantic-ui-react'
+import { Button, Form, Grid, Icon, Segment, Message, Divider, Checkbox } from 'semantic-ui-react'
 import { useAuth } from '../../../context/AuthContext'
-import { parseJwt, getSocialLoginUrl, handleLogError } from '../../../misc/Helpers'
+import { parseJwt, handleLogError } from '../../../misc/Helpers'
 import loginImg from '../../../../assets/images/login.png'
 import './login.css'
 import { businessApi } from '../../../misc/BusinessApi'
@@ -32,11 +32,6 @@ function Login() {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
-
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -92,7 +87,7 @@ function Login() {
         <img className='formImage' src={loginImg} width="220" style={{ position: 'relative' }} alt="login" />
       </div>
       <div className='center'>
-        <div className='commonForm'>
+        <div className='authenForm'>
           <Grid textAlign='center' >
 
             <Grid.Column style={{ maxWidth: 400 }}>
