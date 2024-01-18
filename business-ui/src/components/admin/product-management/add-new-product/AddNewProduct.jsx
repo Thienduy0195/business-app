@@ -5,7 +5,6 @@ import "./AddNewProduct.css";
 import ProductImages from "../product-images/ProductImages";
 import PopUp from "../pop-up-component/PopUpComponent";
 import { ProductService } from "../../../misc/ProductService";
-import { ToastContainer, toast } from 'react-toastify';
 
 const AddNewProduct = () => {
   const [categories, setCategories] = useState([]);
