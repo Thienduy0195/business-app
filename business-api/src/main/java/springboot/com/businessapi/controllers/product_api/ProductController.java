@@ -12,6 +12,7 @@ import springboot.com.businessapi.dto.product_dto.CategoryDto;
 import springboot.com.businessapi.dto.product_dto.ProductDto;
 import springboot.com.businessapi.dto.product_dto.ProductTypeDto;
 import springboot.com.businessapi.entities.product.Product;
+import springboot.com.businessapi.exception_handler.ProductNotFoundException;
 import springboot.com.businessapi.services.product.ICategoryService;
 import springboot.com.businessapi.services.product.IProductImageService;
 import springboot.com.businessapi.services.product.IProductService;
@@ -57,10 +58,10 @@ public class ProductController {
 
     @GetMapping(value = "/detail/{id}")
     public ResponseEntity<?> showCategories(@PathVariable Long id) {
-        if (productService.findById(id) != null){
-            return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
+        if (null == productService.findById(id)){
+            throw new ProductNotFoundException("Item not found !");
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
 
@@ -78,7 +79,11 @@ public class ProductController {
     @PutMapping(value = "/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable Long id) {
-        productService.deleteById(id);
+        if (null == productService.findById(id)){
+            throw new ProductNotFoundException("Item not found ! Delete Failed !");
+        }else {
+            productService.deleteById(id);
+        }
     }
 
 

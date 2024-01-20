@@ -41,7 +41,7 @@
 
 .image-container:hover .prev-button,
 .image-container:hover .next-button {
-  opacity: 0.9; /* Hiện nút khi hover vào container */
+  opacity: 1; /* Hiện nút khi hover vào container */
 }
 
 .prev-button {
@@ -52,9 +52,16 @@
   right: 4px;
 }
 
-@media screen and (max-width: 1366px) {
+@media screen and (max-width: 375px) {
   .square-image {
-    width: 64px;
-    height: 64px;
+    width: 84px;
+    height: 84px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .square-image {
+    width: 68px;
+    height: 68px;
   }
 }

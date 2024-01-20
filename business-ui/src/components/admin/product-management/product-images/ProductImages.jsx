@@ -1,13 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ImagesDropzone from "./ImagesDropzone";
 import ImageElement from "./ImageElement";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductImages({ imageList, setImageList }) {
+  const [toastDisplayed, setToastDisplayed] = useState(false);
+
   const changeImageField = (index, parameter, value) => {
     const newArray = [...imageList];
     newArray[index][parameter] = value;
     console.log("newArray[index][parameter]", newArray[index][parameter]);
-    if(newArray.length > 6){
+    if (newArray.length > 6) {
       var images = newArray.slice(0, 6);
       setImageList(images);
       return;
@@ -37,14 +41,14 @@ export default function ProductImages({ imageList, setImageList }) {
     }
   };
 
-
   const handleDeleteImage = (index) => {
-        const newArray = [...imageList];
-        newArray.splice(index, 1);
-        setImageList(newArray);
+    const newArray = [...imageList];
+    newArray.splice(index, 1);
+    setImageList(newArray);
   };
 
   useEffect(() => {
+    let hasExceededLimit = false;
     imageList.forEach((image, index) => {
       if (image.status === "FINISH") return;
       // changeImageField(index, "status", "UPLOADING");
@@ -69,7 +73,20 @@ export default function ProductImages({ imageList, setImageList }) {
         }
       );
     });
-  });
+    if (imageList.length > 6) {
+      hasExceededLimit = true;
+      if (!toastDisplayed) {
+        toast.warning("CHỈ UPLOAD TỐI ĐA 6 ẢNH", {
+          position: "top-center",
+        });
+        setToastDisplayed(true);
+      }
+      return;
+    }
+    return () => {
+      setToastDisplayed(false);
+    };
+  }, [imageList]);
 
   return (
     <div className="align-items-around">

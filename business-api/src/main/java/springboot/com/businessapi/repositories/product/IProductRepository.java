@@ -20,6 +20,7 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
     @Query("UPDATE Product p SET p.productFlag = 1 where p.id =:entityId")
     void deleteById(Long entityId);
 
-    @Query("SELECT p FROM Product p WHERE p.productFlag = 0")
+//    @Query("SELECT p FROM Product p WHERE p.productFlag = 0")
+    @Query("SELECT p FROM Product p")
     Page<Product> findAllByProductFlag(Pageable pageable);
 }

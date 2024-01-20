@@ -51,7 +51,7 @@ const UpdateProduct = () => {
         })
         .catch((err1) => {
           alert("Sản phẩm không tồn tại");
-          navigate("/add");
+          navigate("/admin/products");
         });
     }
   }, [itemId]);
@@ -90,7 +90,6 @@ const UpdateProduct = () => {
   });
 
   const handleInputChange = (e) => {
-    // setIsDisabled(false);
     const { name, value } = e.target;
     if (name === "category") {
       // Tìm đối tượng category tương ứng với giá trị được chọn
@@ -163,23 +162,13 @@ const UpdateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit formData", formData);
-    ProductService.updateProduct(formData);
-    navigate("/add")
+    ProductService.updateProduct(formData).then(() => {
+      navigate("/admin/products");
+    });
   };
 
   const [popupMessage, setPopupMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
-
-  // const saveOrUpdateProduct = async (e) => {
-  //     e.preventDefault();
-
-  //     if (!name || !price) {
-  //         setPopupMessage('Complete el nombre y el precio del producto.');
-  //         setShowPopup(true);
-  //         return;
-  //     }
-
-  // }
 
   return (
     <div className="add-product">

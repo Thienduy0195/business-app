@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import "./product-list-admin.css";
 import { ProductService } from "../../../misc/ProductService";
 import Pagination from "@material-ui/lab/Pagination";
-import ProductItem from "../product-item/ProductItem";
+import { Link } from "react-router-dom";
+import {
+  TableRow,
+  TableHeaderCell,
+  TableHeader,
+  TableCell,
+  TableBody,
+  Table,
+} from "semantic-ui-react";
 
 const ProductListAdmin = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(15);
   const [count, setCount] = useState(0);
-  const [idDelete, setIdDelete] = useState();
 
-  const getRequestParams = (page, pageSize) => {
+  const geTableRowequestParams = (page, pageSize) => {
     let params = {};
 
     if (page) {
@@ -28,7 +35,7 @@ const ProductListAdmin = () => {
   };
 
   const showProducts = () => {
-    const params = getRequestParams(page, pageSize);
+    const params = geTableRowequestParams(page, pageSize);
 
     ProductService.getAllProducts(params)
       .then((response) => {
@@ -39,60 +46,76 @@ const ProductListAdmin = () => {
       .catch((err) => console.error);
   };
 
-  useEffect(showProducts, [page, pageSize, idDelete]);
-
-  const updateItemInLine = (changedItem) => {
-    console.log("changedItem", changedItem);
-    let newList = products.map((x) => {
-      if (x.id === changedItem.id) {
-        x = changedItem;
-      }
-      return x;
-    });
-    setProducts(newList);
-  };
+  useEffect(showProducts, [page, pageSize]);
 
   const deleteItem = (id) => {
-    ProductService.deleteProduct(id);
-    setIdDelete(id);
+    ProductService.deleteProduct(id)
+      .then(() => {
+        showProducts();
+      })
+      .catch((error) => {
+        console.error("Error deleting product: ", error);
+      });
   };
 
   return (
     <div className="container-fluid">
-      <div className="container">
-        <table className="w-100">
-          <thead>
-            <tr>
-              <th className="text-center">No.</th>
-              <th className="text-center">MÃ SP</th>
-              <th className="text-center">TÊN SẢN PHẨM</th>
-              <th className="text-center">SỐ LƯỢNG</th>
-              <th className="text-center">ĐƠN VỊ TÍNH</th>
-              <th className="text-center">GIÁ VỐN</th>
-              <th className="text-center">GIÁ BÁN LẺ</th>
-              <th className="text-center">CHIẾT KHẤU</th>
-              <th className="text-center">GIÁ KHUYẾN MÃI</th>
-              <th className="text-center">THAO TÁC</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((item, index) => {
+      <div className="container mt-3 product-table">
+        <Table striped>
+          <TableHeader>
+            <TableRow className="text-center">
+              <TableHeaderCell>No.</TableHeaderCell>
+              <TableHeaderCell>MÃ SP</TableHeaderCell>
+              <TableHeaderCell>TÊN SẢN PHẨM</TableHeaderCell>
+              <TableHeaderCell>SỐ LƯỢNG</TableHeaderCell>
+              <TableHeaderCell>ĐƠN VỊ TÍNH</TableHeaderCell>
+              <TableHeaderCell>GIÁ VỐN</TableHeaderCell>
+              <TableHeaderCell>GIÁ BÁN LẺ</TableHeaderCell>
+              <TableHeaderCell>CHIẾT KHẤU (%)</TableHeaderCell>
+              <TableHeaderCell>GIÁ KHUYẾN MÃI</TableHeaderCell>
+              <TableHeaderCell>THAO TÁC</TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((productItem, index) => {
               return (
-                <ProductItem
+                <TableRow
+                  disabled={productItem.productFlag === 1}
+                  className="text-center"
                   key={index}
-                  updateItemInLine={updateItemInLine}
-                  //   showUpdateForm={showUpdateForm}
-                  productItem={item}
-                  no={(page - 1) * pageSize + index + 1}
-                  deleteItem={deleteItem}
-                ></ProductItem>
+                >
+                  <TableCell>
+                    <strong>{(page - 1) * pageSize + index + 1}</strong>
+                  </TableCell>
+                  <TableCell>{productItem.code}</TableCell>
+                  <TableCell>{productItem.name}</TableCell>
+                  <TableCell>{productItem.quantity}</TableCell>
+                  <TableCell>{productItem.unit}</TableCell>
+                  <TableCell>{productItem.costPrice}</TableCell>
+                  <TableCell>{productItem.retailPrice}</TableCell>
+                  <TableCell>{productItem.discountPercent}</TableCell>
+                  <TableCell>{productItem.salePrice}</TableCell>
+                  <TableCell className="d-flex justify-content-around">
+                    <Link
+                      as={Link}
+                      to={`/edit/${productItem.id}`}
+                      className="text-white"
+                    >
+                      <i className="fa-regular fa-pen-to-square text-primary"></i>
+                    </Link>
+
+                    <Link onClick={() => deleteItem(productItem.id)}>
+                      <i className="fa-solid fa-trash text-secondary"></i>
+                    </Link>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
 
-      <div className="d-flex justify-content-center">
+      <div className="center">
         <Pagination
           color="primary"
           className="my-3"

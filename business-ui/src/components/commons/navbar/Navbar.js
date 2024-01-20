@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { HamburgetMenuOpen } from "./Icons";
 import silva from "../../../assets/images/silva.png";
@@ -9,6 +9,8 @@ function NavBar() {
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
+
+  let navigate = useNavigate();
 
   const { getUser, userIsAuthenticated, userLogout } = useAuth();
 
@@ -67,25 +69,25 @@ function NavBar() {
                     className="nav-links"
                     onClick={handleClick}
                   >
-                    LIST
+                    SHOW LIST
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
                     // exact
-                    to="/new"
+                    to="/add-new"
                     // activeclassName="active"
                     className="nav-links"
                     onClick={handleClick}
                   >
-                    NEW
+                    ADD NEW
                   </NavLink>
                 </li>
 
                 <li className="nav-item">
                   <NavLink
                     // exact
-                    to="/add"
+                    to="/admin/products"
                     // activeclassName="active"
                     className="nav-links"
                     onClick={handleClick}
@@ -94,7 +96,7 @@ function NavBar() {
                   </NavLink>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <NavLink
                     // exact
                     to="/add"
@@ -115,7 +117,7 @@ function NavBar() {
                   >
                     Contact
                   </NavLink>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -123,7 +125,7 @@ function NavBar() {
             <div className="text-end" style={logoutMenuStyle()}>
               <span className="authen">{`Hi ${getUserName()}`}</span>
               <span className="authen">|</span>
-              <NavLink to="/" className="authen" onClick={logout}>
+              <NavLink to="/login" className="authen" onClick={logout}>
                 <span>Log out</span>
                 <i className="fa-solid fa-right-from-bracket"></i>
               </NavLink>
@@ -132,8 +134,8 @@ function NavBar() {
               <NavLink to="/login">
                 <span className="authen">Log in</span>
               </NavLink>
-              <span className="authen">/</span>
-              <NavLink to="/signup">
+              <span className="authen p-2">/</span>
+              <NavLink to="/sign-up">
                 <span className="authen">Sign up</span>
               </NavLink>
             </div>

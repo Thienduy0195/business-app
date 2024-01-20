@@ -9,8 +9,9 @@
 }
 
 .authenForm {
-  width: 400px;
+  width: 450px;
 }
+
 
 @media screen and (max-width: 540px) {
   .center {
@@ -22,8 +23,12 @@
   }
 
   .authenForm {
-    width: 320px;
+    width: 324px;
   }
+
+  .userForm {
+    padding: 16px;
+    }
 }
 
 .orange-text {
@@ -32,4 +37,11 @@
 
 .displayNone {
   display: none;
+}
+
+.toast-success{
+  /* float:right; */
+  /* width: 80%; */
+  font-weight: bold;
+  color: #f66e00;
 }

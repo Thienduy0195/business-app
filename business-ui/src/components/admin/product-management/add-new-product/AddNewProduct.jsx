@@ -5,6 +5,8 @@ import "./AddNewProduct.css";
 import ProductImages from "../product-images/ProductImages";
 import PopUp from "../pop-up-component/PopUpComponent";
 import { ProductService } from "../../../misc/ProductService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddNewProduct = () => {
   const [categories, setCategories] = useState([]);
@@ -151,7 +153,7 @@ const AddNewProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit formData", formData);
-    ProductService.createProduct(formData)
+    ProductService.createProduct(formData);
     // .then()
     // .catch((err) => toast.error("CREATE FAILED!"));
   };
@@ -385,11 +387,11 @@ const AddNewProduct = () => {
             </div>
           </div>
 
-          <div className="row">
+          <div className="row mt-3">
             <div className="col-md-9 col-sm-12">
               <div className="row">
                 <div className="col-12">
-                  <div className="col-md-12 row">
+                  <div className="row">
                     <label>
                       Mô Tả Ngắn:
                       <input
@@ -403,7 +405,7 @@ const AddNewProduct = () => {
                   </div>
                 </div>
               </div>
-              <div className="row">
+              <div>
                 <div className="row">
                   <label>
                     Thêm Thông Tin:
@@ -417,7 +419,7 @@ const AddNewProduct = () => {
                 </div>
               </div>
 
-              <div className="row">
+              <div>
                 <div className="row">
                   <label>
                     Thêm Mô Tả:
@@ -431,7 +433,7 @@ const AddNewProduct = () => {
                 </div>
               </div>
 
-              <div className="row">
+              <div>
                 <div className="row">
                   <label>
                     Thêm Ghi Chú:

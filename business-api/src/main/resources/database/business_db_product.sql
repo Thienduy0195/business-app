@@ -1,7 +1,7 @@
 drop database business_db;
-
-
 create database business_db;
+
+update product set product_flag = 0 where id > 0;
 
 INSERT INTO category VALUES (1,'CODE1','Category1'), (2,'CODE2','Category2'),(3,'CODE3','Category3'), (4,'CODE4','Category4'), (5,'CODE5','Category5');
 

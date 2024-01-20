@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
-import { Navigate, Link } from 'react-router-dom'
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Button, Form, Grid, Icon, Segment, Message, Divider, Checkbox } from 'semantic-ui-react'
-import { useAuth } from '../../../context/AuthContext'
-import { parseJwt, handleLogError } from '../../../misc/Helpers'
-import loginImg from '../../../../assets/images/login.png'
-import './login.css'
-import { businessApi } from '../../../misc/BusinessApi'
-
+import React, { useState } from "react";
+import { Navigate, Link, NavLink } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "./login.css";
+import {
+  Button,
+  Form,
+  Grid,
+  Icon,
+  Segment,
+  Message,
+  Divider,
+  Checkbox,
+} from "semantic-ui-react";
+import { useAuth } from "../../context/AuthContext";
+import { parseJwt, handleLogError } from "../../misc/Helpers";
+import loginImg from "../../../assets/images/login.png";
+import "./login.css";
+import { businessApi } from "../../misc/BusinessApi";
+import "react-toastify/dist/ReactToastify.css";
 
 //TẠM THỜI KHÔNG DÙNG CÁI ValidationSchema NÀY
 const ValidationSchema = Yup.object().shape({
@@ -21,79 +31,83 @@ const ValidationSchema = Yup.object().shape({
 });
 
 function Login() {
-
-
-  const Auth = useAuth()
-  const isLoggedIn = Auth.userIsAuthenticated()
+  const Auth = useAuth();
+  const isLoggedIn = Auth.userIsAuthenticated();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [message, setMessage] = useState('')
-  const [isError, setIsError] = useState(false)
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
     validationSchema: ValidationSchema,
     onSubmit: async (values) => {
-
-      console.log(values);
-
       if (!values.username || !values.password) {
-        setMessage('Username & password are required!')
+        setMessage("Username & password are required!");
         setIsError(true);
-        return
+        return;
       } else {
-        setIsError(false)
+        setIsError(false);
       }
 
       // Xử lý khi form được submit
       try {
-        const response = await businessApi.authenticate(values.username, values.password)
+        const response = await businessApi.authenticate(
+          values.username,
+          values.password
+        );
         console.log("response", response);
-        const { accessToken } = response.data
+        const { accessToken } = response.data;
 
-        const data = parseJwt(accessToken)
-        const authenticatedUser = { data, accessToken }
+        const data = parseJwt(accessToken);
+        const authenticatedUser = { data, accessToken };
 
         console.log("parseJwt(accessToken)", data);
 
-        Auth.userLogin(authenticatedUser)
+        Auth.userLogin(authenticatedUser);
 
-        setIsError(false)
+        setIsError(false);
       } catch (error) {
-        handleLogError(error)
-        setMessage('The username or password are incorrect!')
-        setIsError(true)
+        handleLogError(error);
+        setMessage("The username or password are incorrect!");
+        setIsError(true);
       }
     },
   });
 
   if (isLoggedIn) {
-    return <Navigate to='/' />
+    return <Navigate to="/" />;
   }
-
-
-
 
   return (
     <div>
-
       <div className="loginImage text-center">
-        <img className='formImage' src={loginImg} width="220" style={{ position: 'relative' }} alt="login" />
+        <img
+          className="formImage"
+          src={loginImg}
+          width="220"
+          style={{ position: "relative" }}
+          alt="login"
+        />
       </div>
-      <div className='center'>
-        <div className='authenForm'>
-          <Grid textAlign='center' >
-
+      <div className="center">
+        <div className="authenForm">
+          <Grid textAlign="center">
             <Grid.Column style={{ maxWidth: 400 }}>
-              <Form size='large' onSubmit={formik.handleSubmit}>
+              <Form
+                className="userForm"
+                size="large"
+                onSubmit={formik.handleSubmit}
+              >
                 <Segment>
-                  <div className='error-field'>
+                  <div className="error-field">
                     {formik.touched.username && formik.errors.username ? (
                       <div>{formik.errors.username}</div>
                     ) : null}
@@ -102,68 +116,69 @@ function Login() {
                   <Form.Input
                     fluid
                     autoFocus
-                    name='username'
+                    name="username"
                     action={{
-                      icon: 'user',
+                      icon: "user",
                       // disabled: true,
                       tabIndex: -1,
                       // color: 'orange'
-                      style: {
-                        background: '#F2711C',
-                        opacity: '50%',
-                        color: 'white'
-                      },
-
+                      // style: {
+                      //   background: "#F2711C",
+                      //   opacity: "50%",
+                      //   color: "white",
+                      // },
                     }}
-                    actionPosition='left'
-                    actionDisabled='true'
+                    actionPosition="left"
+                    actionDisabled="true"
                     id="username"
                     type="text"
-                    placeholder='Username'
+                    placeholder="Username"
                     onChange={formik.handleChange}
                     value={formik.values.username}
                   />
 
-                  <div className='error-field'>
+                  <div className="error-field">
                     {formik.touched.password && formik.errors.password ? (
                       <div>{formik.errors.password}</div>
                     ) : null}
                   </div>
                   <Form.Input
-                    name='password'
-                    type={passwordVisible ? 'text' : 'password'}
+                    name="password"
+                    type={passwordVisible ? "text" : "password"}
                     icon={
                       <Icon
-                        name={passwordVisible ? 'eye' : 'eye slash'}
+                        name={passwordVisible ? "eye" : "eye slash"}
                         link
                         onClick={togglePasswordVisibility}
                       />
                     }
                     fluid
-                    iconPosition='right'
+                    iconPosition="right"
                     action={{
-                      icon: 'lock',
+                      icon: "lock",
                       // disabled: true,
                       tabIndex: -1,
                       // color: 'orange'
-                      style: {
-                        background: '#F2711C',
-                        opacity: '50%',
-                        color: 'white'
-                      },
+                      // style: {
+                      //   background: "#F2711C",
+                      //   opacity: "50%",
+                      //   color: "white",
+                      // },
                     }}
-                    actionPosition='left'
-                    placeholder='Password'
+                    actionPosition="left"
+                    placeholder="Password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
                   />
 
-                  <Button color='orange' fluid size='large' type='submit'>Login</Button>
+                  <Button color="orange" fluid size="large" type="submit">
+                    Login
+                  </Button>
                 </Segment>
               </Form>
 
-              <div className='mt-3 d-flex text-start'>
-                <div className='col-6'>
+              <div className="mt-3 d-flex">
+                <div className="col-6 text-start">
                   <Form.Field>
                     <Checkbox
                       className="remember-me-checkbox"
@@ -173,17 +188,20 @@ function Login() {
                     />
                   </Form.Field>
                 </div>
-                <div className='col-6'>
+                <div className="col-6 text-end">
                   <Link to="/forgot-password">Forgot the password?</Link>
                 </div>
               </div>
-
-              {/* <Message>{`Don't have already an account? `}
-    <NavLink to="/signup" color='purple'>Sign Up</NavLink>
-  </Message> */}
               {isError && <Message negative>{message}</Message>}
+              <Message>
+                {`Don't have already an account? `}
+                <NavLink to="/sign-up" color="purple">
+                  <strong>Sign Up</strong>
+                </NavLink>
+              </Message>
 
               <Divider horizontal>have a nice day !</Divider>
+
               {/* <Menu compact icon='labeled'>
   <Menu.Item name='github' href={getSocialLoginUrl('github')}>
     <Icon name='github' />Github
@@ -202,10 +220,8 @@ function Login() {
           </Grid>
         </div>
       </div>
-
-
     </div>
-  )
+  );
 }
 
 export default Login;

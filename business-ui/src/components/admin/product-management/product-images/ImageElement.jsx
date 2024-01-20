@@ -25,9 +25,15 @@ export default function ImageElement({
             onClick={() => handleDeleteImage(index)}
           />
 
-          <i class="fa-solid fa-angle-left prev-button"  onClick={() => handleChangeOrderUp(index)}></i>
+          <i
+            class="fa-solid fa-angle-left prev-button"
+            onClick={() => handleChangeOrderUp(index)}
+          ></i>
 
-          <i class="fa-solid fa-angle-right next-button"  onClick={() => handleChangeOrderDown(index)}></i>
+          <i
+            class="fa-solid fa-angle-right next-button"
+            onClick={() => handleChangeOrderDown(index)}
+          ></i>
         </div>
       ) : (
         <div className="d-flex align-items-center">
