@@ -174,7 +174,7 @@ const AddNewProduct = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-2 col-sm-12 center">
+            <div className="col-lg-2 col-md-12 col-12 center">
               <div className="form-group-avatar-upload">
                 <input
                   type="file"
@@ -204,9 +204,9 @@ const AddNewProduct = () => {
                 ) : null}
               </div>
             </div>
-            <div className="col-md-10 col-sm-12 p-0">
+            <div className="col-lg-10 col-12 p-0">
               <div className="row justify-content-around">
-                <div className="col-md-3 col-sm-6 col-6 row">
+                <div className="col-lg-3 col-sm-6 col-6 row">
                   <label>
                     Danh Mục:
                     <select
@@ -226,7 +226,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 col-6 row">
+                <div className="col-lg-3 col-sm-6 col-6 row">
                   <label>
                     Dòng Sản Phẩm:
                     <select
@@ -249,7 +249,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-4 col-sm-8 row">
+                <div className="col-lg-4 col-sm-8 row">
                   <label>
                     Tên Sản Phẩm:
                     <input
@@ -262,7 +262,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-2 col-sm-4 row">
+                <div className="col-lg-2 col-sm-4 row">
                   <label>
                     Mã Sản Phẩm:
                     <input
@@ -278,7 +278,7 @@ const AddNewProduct = () => {
               </div>
 
               <div className="row justify-content-around">
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Khối Lượng:
                     <input
@@ -291,7 +291,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Số Lượng Trong Kho:
                     <input
@@ -304,7 +304,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Đơn Vị Tính:
                     <input
@@ -317,7 +317,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Giá Vốn:
                     <input
@@ -332,7 +332,7 @@ const AddNewProduct = () => {
               </div>
 
               <div className="row justify-content-around">
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Giá Bán Sỉ:
                     <input
@@ -345,7 +345,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Giá Bán Lẻ:
                     <input
@@ -358,7 +358,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     % Chiết Khấu:
                     <input
@@ -371,7 +371,7 @@ const AddNewProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-md-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6 row">
                   <label>
                     Giá Khuyến Mãi:
                     <input
@@ -388,7 +388,7 @@ const AddNewProduct = () => {
           </div>
 
           <div className="row mt-3">
-            <div className="col-md-9 col-sm-12">
+            <div className="col-lg-9 col-12">
               <div className="row">
                 <div className="col-12">
                   <div className="row">
@@ -447,7 +447,7 @@ const AddNewProduct = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-3 col-sm-12">
+            <div className="col-lg-3 col-12">
               <div className="muti-images-upload-group">
                 <div className="">
                   <ProductImages

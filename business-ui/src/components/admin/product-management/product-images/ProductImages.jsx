@@ -111,7 +111,7 @@ export default function ProductImages({ imageList, setImageList }) {
 
             <>
               {imageList.length < 6 ? (
-                <div className="col-4">
+                <div className="col-lg-4 col-6">
                   <ImagesDropzone setImageList={setImageList} />{" "}
                 </div>
               ) : (
@@ -120,7 +120,7 @@ export default function ProductImages({ imageList, setImageList }) {
             </>
           </div>
         ) : (
-          <div className="col-4">
+          <div className="col-lg-4 col-6">
             <ImagesDropzone setImageList={setImageList} />
           </div>
         )}

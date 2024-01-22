@@ -12,6 +12,14 @@
   width: 450px;
 }
 
+.searching-form{
+  padding: 16px;
+  border: solid 1px rgba(34,36,38,.1);
+  border-radius: 16px 16px 0px 0px;
+  box-shadow: 1px 1px 4px 1px rgba(109, 109, 109, 0.25);
+  background-color: rgb(223, 246, 252);
+}
+
 
 @media screen and (max-width: 540px) {
   .center {

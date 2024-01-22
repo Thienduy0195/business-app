@@ -69,7 +69,7 @@ function NavBar() {
                     className="nav-links"
                     onClick={handleClick}
                   >
-                    SHOW LIST
+                    USER PRODUCTS
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -92,7 +92,7 @@ function NavBar() {
                     className="nav-links"
                     onClick={handleClick}
                   >
-                    LIST ADMIN
+                    ADMIN PRODUCTS
                   </NavLink>
                 </li>
 

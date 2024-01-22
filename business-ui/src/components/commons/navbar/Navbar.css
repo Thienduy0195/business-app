@@ -70,14 +70,18 @@ ul {
   transition: width 0.7s ease, background-color 0.5s ease;
 }
 
+.nav-item a:hover {
+  color: #eecb05;
+}
+
 .nav-item:hover:after {
   width: 100%;
-  background: #ffdd40;
+  background: #eecb05;
 }
 
 .nav-item .active {
-  color: #ffdd40;
-  border: 1px solid #ffdd40;
+  color: #eecb05;
+  border: 1px solid #eecb05;
 }
 
 .nav-icon {
