@@ -62,6 +62,12 @@ public class Product implements Persistable<Long> {
     @Column(name = "sale_price")
     private Integer salePrice;
 
+    @Column(name = "sold_quantity")
+    private Integer soldQuantity;
+
+    @Column(name = "remaining_quantity")
+    private Integer remainingQuantity;
+
     @Column(name = "review_score")
     private Double reviewScore;
 

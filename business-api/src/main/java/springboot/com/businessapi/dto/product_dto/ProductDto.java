@@ -1,5 +1,6 @@
 package springboot.com.businessapi.dto.product_dto;
 
+import jakarta.persistence.Column;
 import lombok.*;
 
 import java.util.List;
@@ -42,6 +43,10 @@ public class ProductDto {
     private Integer discountPercent;
 
     private Integer salePrice;
+
+    private Integer soldQuantity;
+
+    private Integer remainingQuantity;
 
     private Double reviewScore;
 

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,32 @@ public class ProductController {
 
     @GetMapping()
     public Page<ProductDto> showProducts(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "30") int size) {
+            @RequestParam(required = false, value = "page", defaultValue = "0") int page,
+            @RequestParam(required = false, value = "pageSize", defaultValue = "10") int pageSize,
+            @RequestParam(required = false, value = "productFlag") Integer productFlag,
+            @RequestParam(required = false, value = "code") String code,
+            @RequestParam(required = false, value = "name") String name,
+            @RequestParam(required = false, value = "categoryId") Long categoryId,
+            @RequestParam(required = false, value = "productTypeId") Long productTypeId,
+            @RequestParam(required = false, value = "sortType") String sortType
+    ) {
         try {
-            Pageable pagination = PageRequest.of(page, size);
-            return productService.getProductPage(pagination);
+            String sortBy = "";
+            Sort.Direction direction = null;
+            if ("SALE-DESC".equals(sortType)) {
+                sortBy = "soldQuantity";
+                direction = Sort.Direction.ASC;
+            } else if ("SALE-ASC".equals(sortType)) {
+                sortBy = "remainingQuantity";
+                direction = Sort.Direction.ASC;
+            } else {
+                sortBy = "id";
+                direction = Sort.Direction.ASC;
+            }
+            Pageable pagination = PageRequest.of(page, pageSize);
+            Page<ProductDto> productDtoPage = productService.getProductPage(code, name, categoryId, productTypeId, productFlag, sortBy, direction, pagination);
+            return productDtoPage;
+//            return productService.getProductPage(pagination);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

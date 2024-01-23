@@ -24,35 +24,75 @@ import {
   TextArea,
 } from "semantic-ui-react";
 
-const options = [
-  { key: "m", text: "Male", value: "male" },
-  { key: "f", text: "Female", value: "female" },
-  { key: "o", text: "Other", value: "other" },
-];
-
-const pageSizes = [
-  { key: "10", text: "10", value: 10 },
-  { key: "15", text: "15", value: 15 },
-  { key: "20", text: "20", value: 20 },
-];
-
 const ProductListAdmin = () => {
   const [products, setProducts] = useState([]);
+
+  //attributes for searching
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [count, setCount] = useState(0);
+  const [totalElement, setTotalElement] = useState(0);
+  const [productFlag, setProductFlag] = useState(5);
 
-  const [value, setValue] = useState();
+  const [searchingParams, setSearchingParams] = useState({});
+  const [oldPrs, setOldPrs] = useState({});
 
-  const geTTableRowequestParams = (page, pageSize) => {
-    let params = {};
+  //selection list
+  const [categories, setCategories] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
+  const options = [
+    { key: "1", text: "Bán Chạy", value: "SALE-DESC" },
+    { key: "2", text: "Tồn Kho", value: "SALE-ASC" },
+  ];
+
+  const handleInputChange = (e, { name, value }) => {
+    setSearchingParams((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    showProducts(true);
+  };
+
+  useEffect(() => {
+    ProductService.getAllCategories()
+      .then((res) => {
+        const categoryArray = res.data.map((item) => {
+          return {
+            key: item.categoryCode,
+            text: item.categoryName,
+            value: item.categoryId,
+          };
+        });
+        setCategories(categoryArray);
+      })
+      .catch((err1) => console.error);
+    ProductService.getAllProductTypes()
+      .then((res) => {
+        const productTypeArray = res.data.map((item) => {
+          return {
+            key: item.productTypeId,
+            text: item.productTypeName,
+            value: item.productTypeId,
+          };
+        });
+        setProductTypes(productTypeArray);
+      })
+      .catch((err2) => console.error);
+  }, []);
+
+  const getSearchingParams = (page, pageSize, productFlag, obj) => {
+    let params = obj;
 
     if (page) {
       params["page"] = page - 1;
     }
     if (pageSize) {
-      params["size"] = pageSize;
+      params["pageSize"] = pageSize;
     }
+    params["productFlag"] = productFlag;
     return params;
   };
 
@@ -60,19 +100,34 @@ const ProductListAdmin = () => {
     setPage(value);
   };
 
-  const showProducts = () => {
-    const params = geTTableRowequestParams(page, pageSize);
-
-    ProductService.getAllProducts(params)
-      .then((response) => {
-        console.log("PRODUCTS", response.data);
-        setProducts(response.data.content);
-        setCount(response.data.totalPages);
-      })
-      .catch((err) => console.error);
+  const showProducts = (search) => {
+    console.log("search", search);
+    let params = {};
+    if (search === true) {
+      params = getSearchingParams(page, pageSize, productFlag, searchingParams);
+      console.log("params true", params);
+      ProductService.getAllProducts(params)
+        .then((response) => {
+          console.log("PRODUCTS", response.data);
+          setProducts(response.data.content);
+          setTotalElement(response.data.totalPages);
+          setOldPrs(searchingParams);
+        })
+        .catch((err) => console.error);
+    } else {
+      params = getSearchingParams(page, pageSize, productFlag, oldPrs);
+      console.log("params false", params);
+      ProductService.getAllProducts(params)
+        .then((response) => {
+          console.log("PRODUCTS", response.data);
+          setProducts(response.data.content);
+          setTotalElement(response.data.totalPages);
+        })
+        .catch((err) => console.error);
+    }
   };
 
-  useEffect(showProducts, [page, pageSize]);
+  useEffect(showProducts, [page, pageSize, productFlag]);
 
   const deleteItem = (id) => {
     ProductService.deleteProduct(id)
@@ -88,71 +143,70 @@ const ProductListAdmin = () => {
     <div className="container-fluid">
       <div className="container mt-5 product-table">
         <div>
-          <Form className="searching-form">
+          <Form className="searching-form" onSubmit={handleSubmit}>
             <FormGroup
               //  widths="equal"
-              className="m-0"
+              className="m-0 row"
             >
               <FormField
+                className="col-lg-2 col-md-6 mb-2"
                 control={Input}
                 label="MÃ SẢN PHẨM"
                 placeholder="Mã sản phẩm"
+                name="code"
+                value={searchingParams.code}
+                onChange={handleInputChange}
               />
 
               <FormField
+                className="col-lg-2 col-md-6 mb-2"
                 control={Input}
                 label="TÊN SẢN PHẨM"
                 placeholder="Tên sản phẩm"
+                name="name"
+                value={searchingParams.name}
+                onChange={handleInputChange}
               />
 
               <FormField
+                className="col-lg-2 col-md-6 mb-2"
                 control={Select}
-                label="TRẠNG THÁI"
-                options={options}
-                placeholder="Trạng thái"
+                label="DANH MỤC"
+                options={categories}
+                placeholder="Vui lòng chọn"
+                name="categoryId"
+                value={searchingParams.categoryId}
+                onChange={handleInputChange}
               />
 
               <FormField
+                className="col-lg-2 col-md-6 mb-2"
+                control={Select}
+                label="DÒNG SẢN PHẨM"
+                options={productTypes}
+                placeholder="Vui lòng chọn"
+                name="productTypeId"
+                value={searchingParams.productTypeId}
+                onChange={handleInputChange}
+              />
+
+              <FormField
+                className="col-lg-2 col-md-6 mb-2"
                 control={Select}
                 label="SẮP XẾP"
                 options={options}
-                placeholder="Trạng thái"
+                placeholder="Vui lòng chọn"
+                name="sortType"
+                value={searchingParams.sortType}
+                onChange={handleInputChange}
               />
-              <FormField
-                className="d-flex align-items-end"
-                control={Button}
-                primary
-              >
-                <i className="fa-solid fa-magnifying-glass"></i>
-                <span> TÌM KIẾM</span>
-              </FormField>
+              <div className="d-flex align-items-end col-lg-2 col-md-6 mb-2">
+                <Button primary size="medium">
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <span> TÌM KIẾM </span>
+                </Button>
+              </div>
             </FormGroup>
-            {/* <FormGroup inline>
-              <label>Quantity</label>
-              <FormField
-                control={Radio}
-                label="One"
-                value="1"
-                checked={value === "1"}
-                onChange={(e) => setValue(e.target.value)}
-              />
-              <FormField
-                control={Radio}
-                label="Two"
-                value="2"
-                checked={value === "2"}
-                onChange={(e) => setValue(e.target.value)}
-              />
-              <FormField
-                control={Radio}
-                label="Three"
-                value="3"
-                checked={value === "3"}
-                onChange={(e) => setValue(e.target.value)}
-              />
-            </FormGroup>
-
-            <FormField control={Button}>Submit</FormField> */}
           </Form>
         </div>
         <Table celled selectable>
@@ -171,7 +225,7 @@ const ProductListAdmin = () => {
                   <option value="20">20</option>
                 </select>
               </TableHeaderCell>
-              <TableHeaderCell colSpan="10">
+              <TableHeaderCell colSpan="11">
                 <NavLink to="/add-new">
                   <Button
                     floated="right"
@@ -184,9 +238,33 @@ const ProductListAdmin = () => {
                   </Button>
                 </NavLink>
 
-                <Button size="small">TẤT CẢ</Button>
-                <Button size="small">ĐANG BÁN</Button>
-                <Button size="small">ĐÃ ẨN</Button>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    setProductFlag(5);
+                    setPage(1);
+                  }}
+                >
+                  TẤT CẢ
+                </Button>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    setProductFlag(1);
+                    setPage(1);
+                  }}
+                >
+                  ĐANG BÁN
+                </Button>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    setProductFlag(0);
+                    setPage(1);
+                  }}
+                >
+                  ĐÃ ẨN
+                </Button>
               </TableHeaderCell>
             </TableRow>
           </TableHeader>
@@ -202,6 +280,7 @@ const ProductListAdmin = () => {
               <TableHeaderCell>GIÁ KHUYẾN MÃI</TableHeaderCell>
               <TableHeaderCell>NHẬP KHO</TableHeaderCell>
               <TableHeaderCell>ĐÃ BÁN</TableHeaderCell>
+              <TableHeaderCell>TỒN KHO</TableHeaderCell>
               <TableHeaderCell>THAO TÁC</TableHeaderCell>
             </TableRow>
           </TableHeader>
@@ -224,7 +303,8 @@ const ProductListAdmin = () => {
                   <TableCell>{productItem.discountPercent}</TableCell>
                   <TableCell>{productItem.salePrice}</TableCell>
                   <TableCell>{productItem.quantity}</TableCell>
-                  <TableCell>{productItem.quantity}</TableCell>
+                  <TableCell>{productItem.soldQuantity}</TableCell>
+                  <TableCell>{productItem.remainingQuantity}</TableCell>
                   <TableCell>
                     <div className="d-flex justify-content-around">
                       <Link
@@ -251,7 +331,7 @@ const ProductListAdmin = () => {
         <Pagination
           color="primary"
           className="my-3"
-          count={count}
+          count={totalElement}
           page={page}
           siblingCount={1}
           boundaryCount={1}

@@ -9,3 +9,10 @@
   font-weight: bold;
 }
 
+.color-change-button {
+  background-color: #0f0; /* Màu nền khi nút được click */
+}
+
+.search-button{
+  border: 10px solid black;
+}
