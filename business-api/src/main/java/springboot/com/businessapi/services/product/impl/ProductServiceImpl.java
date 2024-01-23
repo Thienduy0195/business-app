@@ -37,14 +37,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Page<ProductDto> getProductPage(String code, String name, Long categoryId, Long productTypeId, Integer productFlag, String sortBy, Direction direction, Pageable pageable) {
 
-        System.out.println("code: " + code );
-        System.out.println("name: " + name );
-        System.out.println("categoryId: " + categoryId );
-        System.out.println("productTypeId: " + productTypeId );
-        System.out.println("productFlag: " + productFlag );
-        System.out.println("sortBy: " + sortBy );
-        System.out.println("direction: " + direction.toString() );
-
         try {
             Specification<Product> spec = Specification.where(null);
 
@@ -85,16 +77,16 @@ public class ProductServiceImpl implements IProductService {
         return null;
     }
 
+    @Override
+    public Page<ProductDto> getProductPageUser(Pageable pageable) {
+        try {
+            return productRepository.findAllByProductFlag(pageable).map(item -> modelMapper.map(item, ProductDto.class));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-//    @Override
-//    public Page<ProductDto> getProductPage(Pageable pageable) {
-//        try {
-//            return productRepository.findAllByProductFlag(pageable).map(item -> modelMapper.map(item, ProductDto.class));
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     @Override
     public Product addNew(ProductDto productDto) {

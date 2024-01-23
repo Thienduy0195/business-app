@@ -40,8 +40,8 @@ const ProductListAdmin = () => {
   const [categories, setCategories] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
   const options = [
-    { key: "1", text: "Bán Chạy", value: "SALE-DESC" },
-    { key: "2", text: "Tồn Kho", value: "SALE-ASC" },
+    { key: "1", text: "Bán Chạy Nhất", value: "SALE-DESC" },
+    { key: "2", text: "Tồn Kho Nhiều Nhất", value: "SALE-ASC" },
   ];
 
   const handleInputChange = (e, { name, value }) => {
@@ -106,7 +106,7 @@ const ProductListAdmin = () => {
     if (search === true) {
       params = getSearchingParams(page, pageSize, productFlag, searchingParams);
       console.log("params true", params);
-      ProductService.getAllProducts(params)
+      ProductService.getAllProductsAdmin(params)
         .then((response) => {
           console.log("PRODUCTS", response.data);
           setProducts(response.data.content);
@@ -117,7 +117,7 @@ const ProductListAdmin = () => {
     } else {
       params = getSearchingParams(page, pageSize, productFlag, oldPrs);
       console.log("params false", params);
-      ProductService.getAllProducts(params)
+      ProductService.getAllProductsAdmin(params)
         .then((response) => {
           console.log("PRODUCTS", response.data);
           setProducts(response.data.content);
@@ -263,7 +263,7 @@ const ProductListAdmin = () => {
                     setPage(1);
                   }}
                 >
-                  ĐÃ ẨN
+                  TẠM NGƯNG
                 </Button>
               </TableHeaderCell>
             </TableRow>

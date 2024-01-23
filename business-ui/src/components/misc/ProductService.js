@@ -10,7 +10,8 @@ const instance = axios.create({
 });
 
 export const ProductService = {
-  getAllProducts,
+  getAllProductsAdmin,
+  getAllProductsUser,
   getProductById,
   createProduct,
   updateProduct,
@@ -19,10 +20,20 @@ export const ProductService = {
   getAllProductTypes,
 };
 
-function getAllProducts(params) {
-  return instance.get(PRODUCT_REST_API_URL, { params }).then((response) => {
-    return response;
-  });
+function getAllProductsAdmin(params) {
+  return instance
+    .get(`${PRODUCT_REST_API_URL}/admins`, { params })
+    .then((response) => {
+      return response;
+    });
+}
+
+function getAllProductsUser(params) {
+  return instance
+    .get(`${PRODUCT_REST_API_URL}/users`, { params })
+    .then((response) => {
+      return response;
+    });
 }
 
 function getProductById(productId) {

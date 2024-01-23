@@ -31,10 +31,8 @@ public class ProductController {
     private final IProductTypeService productTypeService;
     private final IProductImageService productImageService;
 
-
-
-    @GetMapping()
-    public Page<ProductDto> showProducts(
+    @GetMapping(value = "/admins")
+    public Page<ProductDto> showProductsAdmin(
             @RequestParam(required = false, value = "page", defaultValue = "0") int page,
             @RequestParam(required = false, value = "pageSize", defaultValue = "10") int pageSize,
             @RequestParam(required = false, value = "productFlag") Integer productFlag,
@@ -45,27 +43,40 @@ public class ProductController {
             @RequestParam(required = false, value = "sortType") String sortType
     ) {
         try {
-            String sortBy = "";
-            Sort.Direction direction = null;
+            String sortBy;
+            Sort.Direction direction;
             if ("SALE-DESC".equals(sortType)) {
                 sortBy = "soldQuantity";
-                direction = Sort.Direction.ASC;
+                direction = Sort.Direction.DESC;
             } else if ("SALE-ASC".equals(sortType)) {
                 sortBy = "remainingQuantity";
-                direction = Sort.Direction.ASC;
+                direction = Sort.Direction.DESC;
             } else {
                 sortBy = "id";
                 direction = Sort.Direction.ASC;
             }
             Pageable pagination = PageRequest.of(page, pageSize);
-            Page<ProductDto> productDtoPage = productService.getProductPage(code, name, categoryId, productTypeId, productFlag, sortBy, direction, pagination);
-            return productDtoPage;
-//            return productService.getProductPage(pagination);
+            return productService.getProductPage(code, name, categoryId, productTypeId, productFlag, sortBy, direction, pagination);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
+
+
+    @GetMapping(value = "/users")
+    public Page<ProductDto> showProductsUser(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "30") int size) {
+        try {
+            Pageable pagination = PageRequest.of(page, size);
+            return productService.getProductPageUser(pagination);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
 
     @PostMapping()
     @ResponseBody

@@ -3,16 +3,9 @@
 }
 
 .pageSize {
-  border: 1px solid #a8a8a8;
+  border: 1px solid #2185D0;
   border-radius: 4px;
   height: 33.4px;
   font-weight: bold;
 }
 
-.color-change-button {
-  background-color: #0f0; /* Màu nền khi nút được click */
-}
-
-.search-button{
-  border: 10px solid black;
-}

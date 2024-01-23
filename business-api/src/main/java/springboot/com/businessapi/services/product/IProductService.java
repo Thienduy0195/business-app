@@ -12,6 +12,8 @@ public interface IProductService {
     List<Product> getProductList();
     Page<ProductDto> getProductPage(String productCode, String productName, Long categoryId, Long productTypeId, Integer productFlag,String sortBy, Direction direction,  Pageable pageable);
 
+
+    Page<ProductDto> getProductPageUser(Pageable pageable);
     Product addNew(ProductDto productDto);
 
     Product update(ProductDto productDto);
