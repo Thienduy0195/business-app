@@ -3,7 +3,7 @@ import logo from "../../../assets/images/logo.svg";
 import avatar from "../../../assets/images/image-avatar.png";
 // import { Cart } from "./Cart";
 
-export const ItemInfo = ({
+export const ProductInfo = ({
   images,
   name,
   info,
@@ -52,7 +52,6 @@ export const ItemInfo = ({
               aria-expanded="false"
             ></div>
             <h2 className="text-uppercase">{name}</h2>
-            {/* <img src={logo} alt="Logo" className="logo" /> */}
             <nav>
               <ul
                 className="product-info flex justify-content-between"
@@ -86,45 +85,58 @@ export const ItemInfo = ({
         </div>
       </header>
       <div className="container mt-3">
-        <div className="row">
-          {images.length > 2 && (
-            <>
-              <img className="col-6" src={images[0].imageURL} />
-              <img className="col-6" src={images[1].imageURL} />
-            </>
-          )}
-        </div>
-
-        <hr></hr>
-
         <div>
           <span>{info}</span>
         </div>
-        <hr></hr>
+        <hr className="text-white"></hr>
+        <div className="row">
+          {images.length > 1 && (
+            <>
+              <img className="col" src={images[1].imageURL} />
+              {/* <img className="col-6" src={images[1].imageURL} /> */}
+            </>
+          )}
+        </div>
+        <hr className="text-white"></hr>
 
         <div>
           <span>{description}</span>
         </div>
-        <hr></hr>
-
-        <div>
-          <span>{note}</span>
-        </div>
-
+        <hr className="text-white"></hr>
         <div className="row">
-          {images.length > 5 && (
+          {images.length > 2 && (
             <>
-              <img className="col-6" src={images[2].imageURL} />
-              <img className="col-6" src={images[3].imageURL} />
+              <img className="col" src={images[2].imageURL} />
+              {/* <img className="col-6" src={images[3].imageURL} /> */}
             </>
           )}
         </div>
-
-        <div className="row mt-3">
+        <hr className="text-white"></hr>
+        <div>
+          <span>{note}</span>
+        </div>
+        <hr className="text-white"></hr>
+        <div className="row">
+          {images.length > 3 && (
+            <>
+              <img className="col" src={images[3].imageURL} />
+              {/* <img className="col-6" src={images[5].imageURL} /> */}
+            </>
+          )}
+        </div>
+        <div className="row">
+          {images.length > 4 && (
+            <>
+              <img className="col" src={images[4].imageURL} />
+              {/* <img className="col-6" src={images[5].imageURL} /> */}
+            </>
+          )}
+        </div>
+        <div className="row">
           {images.length > 5 && (
             <>
-              <img className="col-6" src={images[4].imageURL} />
-              <img className="col-6" src={images[5].imageURL} />
+              <img className="col" src={images[5].imageURL} />
+              {/* <img className="col-6" src={images[5].imageURL} /> */}
             </>
           )}
         </div>

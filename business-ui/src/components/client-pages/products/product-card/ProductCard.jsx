@@ -29,10 +29,12 @@ const ProductCard = ({
       </div>
       <div className="product_content">
         <div className="product_name">
-          <strong>{name}</strong>
+          <strong title={name}>{name}</strong>
         </div>
         <div className="product_description">
-          <span className="text-dark">{title}</span>
+          <span title={title} className="text-dark">
+            {title}
+          </span>
         </div>
         <div className="product_price">
           <div className="main_price">
@@ -47,7 +49,8 @@ const ProductCard = ({
           <span>
             {" "}
             <strong className="text-success">
-              $ Góp chỉ từ 1.250.000/tháng
+              <span>Giá tốt - giao hàng nhanh </span>
+              <i class="fa-solid fa-check"></i>
             </strong>
           </span>
         </div>

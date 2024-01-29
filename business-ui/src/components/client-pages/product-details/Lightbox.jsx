@@ -23,11 +23,13 @@ export const Lightbox = ({ productData, setLightbox }) => {
             fillRule="evenodd"
           />
         </svg>
-        <img
-          className="lightbox-image"
-          src={productData[currentProductImage].imageURL}
-          alt=""
-        />
+        <div className="center light-box-show-image">
+          <img
+            className="lightbox-image"
+            src={productData[currentProductImage].imageURL}
+            alt=""
+          />
+        </div>
         <div className="thumbnail-wrapper flex">
           {productData.length > 0 &&
             productData.map((item, index) => (

@@ -7,7 +7,7 @@ import Pagination from "@material-ui/lab/Pagination";
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
+  const [pageSize, setPageSize] = useState(20);
   const [count, setCount] = useState(0);
 
   const getRequestParams = (page, pageSize) => {

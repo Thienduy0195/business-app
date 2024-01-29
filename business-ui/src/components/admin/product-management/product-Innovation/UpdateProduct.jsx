@@ -19,6 +19,12 @@ const UpdateProduct = () => {
   const title = itemId ? "CẬP NHẬT SẢN PHẨM" : "THÊM MỚI SẢN PHẨM";
   const buttonLabel = itemId ? "CẬP NHẬT" : "THÊM MỚI";
 
+  const handleCalculate = (retailPrice, discountPercent) => {
+    const salePrice = retailPrice - (retailPrice * discountPercent) / 100;
+    const result = Math.floor(salePrice / 100) * 100;
+    return result;
+  };
+
   useEffect(() => {
     ProductService.getAllCategories()
       .then((res) => {
@@ -122,6 +128,16 @@ const UpdateProduct = () => {
       });
     }
   };
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      salePrice: handleCalculate(
+        formData.retailPrice,
+        formData.discountPercent
+      ),
+    });
+  }, [formData.retailPrice, formData.discountPercent]);
 
   const genProductCode = (categoryCode) => {
     const randomNumber = Math.floor(Math.random() * 90000) + 10000;
@@ -276,7 +292,7 @@ const UpdateProduct = () => {
                     <input
                       type="text"
                       name="code"
-                      disabled={true}
+                      // disabled={true}
                       value={formData.code}
                       onChange={handleInputChange}
                       className="form-control "
@@ -288,7 +304,7 @@ const UpdateProduct = () => {
               <div className="row justify-content-around">
                 <div className="col-lg-3 col-sm-6 row">
                   <label>
-                    Khối Lượng
+                    Khối Lượng (gram)
                     <input
                       type="number"
                       name="weight"
@@ -383,10 +399,11 @@ const UpdateProduct = () => {
                   <label>
                     Giá Khuyến Mãi
                     <input
+                      disabled={true}
                       type="number"
                       name="salePrice"
                       value={formData.salePrice}
-                      onChange={handleInputChange}
+                      // onChange={handleInputChange}
                       className="form-control "
                     />
                   </label>

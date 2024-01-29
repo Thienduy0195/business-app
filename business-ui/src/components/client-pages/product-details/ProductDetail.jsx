@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductService } from "../../misc/ProductService";
 import { Lightbox } from "./Lightbox";
-import { ItemInfo } from "./ItemInfo";
+import { ProductInfo } from "./ProductInfo";
 import "./styles/css/styles.min.css";
 
 export const ProductDetail = () => {
@@ -55,16 +55,18 @@ export const ProductDetail = () => {
       <main className="product">
         <div className="container-md grid product-container">
           <div className="flex product-image">
-            <img
-              className="product-img"
-              onClick={() => window.innerWidth > 768 && setLightbox(true)}
-              src={
-                productImageList.length > 0 &&
-                productImageList[currentImageIndex].imageURL
-              }
-              alt=""
-            />
-            <div className="thumbnail-wrapper flex">
+            <div className="center image-show">
+              <img
+                className="product-img"
+                onClick={() => window.innerWidth > 768 && setLightbox(true)}
+                src={
+                  productImageList.length > 0 &&
+                  productImageList[currentImageIndex].imageURL
+                }
+                alt=""
+              />
+            </div>
+            <div className="thumbnail-wrapper flex center">
               {productImageList.length > 0 &&
                 productImageList.slice(0, 6).map((item, index) => (
                   <div className="thumbnail" key={index}>
@@ -142,9 +144,11 @@ export const ProductDetail = () => {
             <h1 className="fw-700 line-height-300 fs-800 blue">
               {productItem.name}
             </h1>
-            <p className="fw-400 line-height-500 fs-400 darkGrayishBlue">
-              {productItem.title}
-            </p>
+            <div className="product-title">
+              <p className="fw-400 line-height-500 fs-400 darkGrayishBlue">
+                {productItem.title}
+              </p>
+            </div>
             <div className="product-price">
               <div className="discounted-price flex">
                 <span className="fw-700 blue fs-700">
@@ -204,7 +208,7 @@ export const ProductDetail = () => {
         )}
       </main>
 
-      <ItemInfo
+      <ProductInfo
         name={productItem.name}
         images={images}
         info={productItem.information}

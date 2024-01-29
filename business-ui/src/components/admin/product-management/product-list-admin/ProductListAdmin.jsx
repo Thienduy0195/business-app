@@ -24,7 +24,7 @@ const ProductListAdmin = () => {
   const options = [
     { key: "0", text: "--Vui lòng chọn--", value: null },
     { key: "1", text: "Bán Chạy Nhất", value: "SALE-DESC" },
-    { key: "2", text: "Tồn Kho Nhiều Nhất", value: "SALE-ASC" },
+    { key: "2", text: "Tồn Kho Nhiều", value: "SALE-ASC" },
   ];
 
   //get product categories and product types from server
@@ -287,7 +287,7 @@ const ProductListAdmin = () => {
                 <th>ĐƠN VỊ </th>
                 <th>GIÁ NHẬP</th>
                 <th>GIÁ BÁN LẺ</th>
-                <th>CHIẾT KHẤU (%)</th>
+                {/* <th>CHIẾT KHẤU (%)</th> */}
                 <th>GIÁ KHUYẾN MÃI</th>
                 <th>NHẬP KHO</th>
                 <th>ĐÃ BÁN</th>
@@ -311,7 +311,7 @@ const ProductListAdmin = () => {
                     <td>{productItem.unit}</td>
                     <td>{productItem.costPrice}</td>
                     <td>{productItem.retailPrice}</td>
-                    <td>{productItem.discountPercent}</td>
+                    {/* <td>{productItem.discountPercent}</td> */}
                     <td>{productItem.salePrice}</td>
                     <td>{productItem.quantity}</td>
                     <td>{productItem.soldQuantity}</td>
@@ -326,7 +326,14 @@ const ProductListAdmin = () => {
                           <i className="fa-regular fa-pen-to-square text-primary"></i>
                         </Link>
                         {productItem.productFlag === 1 ? (
-                          <i className="fa-solid fa-triangle-exclamation text-danger m-1"></i>
+                          <i
+                            title={
+                              productItem.productFlag === 1
+                                ? "TẠM NGỪNG KINH DOANH"
+                                : ""
+                            }
+                            className="fa-solid fa-triangle-exclamation text-danger m-1"
+                          ></i>
                         ) : (
                           <Link onClick={() => deleteItem(productItem.id)}>
                             <i className="fa-solid fa-trash text-secondary"></i>

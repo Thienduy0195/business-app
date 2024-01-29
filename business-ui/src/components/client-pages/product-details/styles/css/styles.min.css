@@ -544,3 +544,19 @@ body {
   width: 50%;
   height: 50%;
 }
+
+.product-title{
+  height: 79px;
+}
+
+
+@media (min-width: 64em) {
+  .image-show{
+    height: 586px;
+  }
+
+  .light-box-show-image{
+    height: 550px;
+  }
+  
+}

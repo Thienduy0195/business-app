@@ -3,6 +3,10 @@ body {
   font-size: 1rem!important;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Times New Roman", Times, serif!important;
+}
+
 ul{
   padding-left: 0!important;
 }
