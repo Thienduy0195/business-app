@@ -23,7 +23,7 @@ public interface IProductRepository extends JpaRepository<Product, Long>, JpaSpe
     void deleteById(Long entityId);
 
 //    @Query("SELECT p FROM Product p WHERE p.productFlag = 0")
-    @Query("SELECT p FROM Product p")
+    @Query("SELECT p FROM Product p WHERE p.productFlag = 0")
     Page<Product> findAllByProductFlag(Pageable pageable);
 
 

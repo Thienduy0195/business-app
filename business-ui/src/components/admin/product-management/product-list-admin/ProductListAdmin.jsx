@@ -4,25 +4,6 @@ import "./product-list-admin.css";
 import { ProductService } from "../../../misc/ProductService";
 import Pagination from "@material-ui/lab/Pagination";
 import { Link } from "react-router-dom";
-import {
-  TableRow,
-  TableHeaderCell,
-  TableHeader,
-  TableCell,
-  TableBody,
-  Table,
-  TableFooter,
-  Icon,
-  Button,
-  FormGroup,
-  FormField,
-  Checkbox,
-  Form,
-  Input,
-  Radio,
-  Select,
-  TextArea,
-} from "semantic-ui-react";
 
 const ProductListAdmin = () => {
   const [products, setProducts] = useState([]);
@@ -30,58 +11,52 @@ const ProductListAdmin = () => {
   //attributes for searching
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [totalElement, setTotalElement] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
   const [productFlag, setProductFlag] = useState(5);
 
   const [searchingParams, setSearchingParams] = useState({});
-  const [oldPrs, setOldPrs] = useState({});
+  const [oldParams, setOldParams] = useState({});
 
   //selection list
   const [categories, setCategories] = useState([]);
   const [productTypes, setProductTypes] = useState([]);
   const options = [
+    { key: "0", text: "--Vui lòng chọn--", value: null },
     { key: "1", text: "Bán Chạy Nhất", value: "SALE-DESC" },
     { key: "2", text: "Tồn Kho Nhiều Nhất", value: "SALE-ASC" },
   ];
 
-  const handleInputChange = (e, { name, value }) => {
+  //get product categories and product types from server
+  useEffect(() => {
+    showCategories();
+    showProductTypes();
+  }, []);
+
+  const handleInputChange = (e) => {
+    var { name, value } = e.target;
+    if ((name === "categoryId" || name === "productTypeId") && value == "0") {
+      value = null;
+    }
     setSearchingParams((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const handleProductFlagChange = (value) => {
+    setProductFlag(value);
+    setPage(1);
+  };
+
+  const handleSearchClick = (e) => {
     e.preventDefault();
     showProducts(true);
   };
-
-  useEffect(() => {
-    ProductService.getAllCategories()
-      .then((res) => {
-        const categoryArray = res.data.map((item) => {
-          return {
-            key: item.categoryCode,
-            text: item.categoryName,
-            value: item.categoryId,
-          };
-        });
-        setCategories(categoryArray);
-      })
-      .catch((err1) => console.error);
-    ProductService.getAllProductTypes()
-      .then((res) => {
-        const productTypeArray = res.data.map((item) => {
-          return {
-            key: item.productTypeId,
-            text: item.productTypeName,
-            value: item.productTypeId,
-          };
-        });
-        setProductTypes(productTypeArray);
-      })
-      .catch((err2) => console.error);
-  }, []);
 
   const getSearchingParams = (page, pageSize, productFlag, obj) => {
     let params = obj;
@@ -96,35 +71,24 @@ const ProductListAdmin = () => {
     return params;
   };
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
-
   const showProducts = (search) => {
-    console.log("search", search);
     let params = {};
     if (search === true) {
-      params = getSearchingParams(page, pageSize, productFlag, searchingParams);
-      console.log("params true", params);
-      ProductService.getAllProductsAdmin(params)
-        .then((response) => {
-          console.log("PRODUCTS", response.data);
-          setProducts(response.data.content);
-          setTotalElement(response.data.totalPages);
-          setOldPrs(searchingParams);
-        })
-        .catch((err) => console.error);
+      //client click on button search
+      params = getSearchingParams(page, pageSize, productFlag, searchingParams); //get the new values of searching params to search
+      setOldParams(searchingParams); //save the current searching params
     } else {
-      params = getSearchingParams(page, pageSize, productFlag, oldPrs);
-      console.log("params false", params);
-      ProductService.getAllProductsAdmin(params)
-        .then((response) => {
-          console.log("PRODUCTS", response.data);
-          setProducts(response.data.content);
-          setTotalElement(response.data.totalPages);
-        })
-        .catch((err) => console.error);
+      //the client just change the productFlag or page or pageSize, not search
+      params = getSearchingParams(page, pageSize, productFlag, oldParams); //get the old values of searching params that saved lasted to search
     }
+
+    ProductService.getAllProductsAdmin(params)
+      .then((response) => {
+        setProducts(response.data.content);
+        setTotalPages(response.data.totalPages);
+        setTotalElements(response.data.totalElements);
+      })
+      .catch((err) => console.error);
   };
 
   useEffect(showProducts, [page, pageSize, productFlag]);
@@ -139,205 +103,258 @@ const ProductListAdmin = () => {
       });
   };
 
+  const showCategories = () => {
+    ProductService.getAllCategories()
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err1) => console.error);
+  };
+
+  const showProductTypes = () => {
+    ProductService.getAllProductTypes()
+      .then((res) => {
+        setProductTypes(res.data);
+      })
+      .catch((err2) => console.error);
+  };
+
   return (
     <div className="container-fluid">
-      <div className="container mt-5 product-table">
+      <div className="container mt-5 mb-3 product-table">
         <div>
-          <Form className="searching-form" onSubmit={handleSubmit}>
-            <FormGroup
-              //  widths="equal"
-              className="m-0 row"
-            >
-              <FormField
-                className="col-lg-2 col-md-6 mb-2"
-                control={Input}
-                label="MÃ SẢN PHẨM"
-                placeholder="Mã sản phẩm"
-                name="code"
-                value={searchingParams.code}
-                onChange={handleInputChange}
-              />
+          <form className="searching-form row" onSubmit={handleSearchClick}>
+            <div className="col-lg-2 col-6 mb-2 row">
+              <label>
+                Mã Sản Phẩm
+                <input
+                  type="text"
+                  name="code"
+                  value={searchingParams.code}
+                  onChange={handleInputChange}
+                  className="form-control "
+                  placeholder="Vui lòng nhập..."
+                />
+              </label>
+            </div>
 
-              <FormField
-                className="col-lg-2 col-md-6 mb-2"
-                control={Input}
-                label="TÊN SẢN PHẨM"
-                placeholder="Tên sản phẩm"
-                name="name"
-                value={searchingParams.name}
-                onChange={handleInputChange}
-              />
+            <div className="col-lg-3 col-6 mb-2 row">
+              <label>
+                Tên Sản Phẩm
+                <input
+                  type="text"
+                  name="name"
+                  value={searchingParams.name}
+                  onChange={handleInputChange}
+                  className="form-control "
+                  placeholder="Vui lòng nhập..."
+                />
+              </label>
+            </div>
 
-              <FormField
-                className="col-lg-2 col-md-6 mb-2"
-                control={Select}
-                label="DANH MỤC"
-                options={categories}
-                placeholder="Vui lòng chọn"
-                name="categoryId"
-                value={searchingParams.categoryId}
-                onChange={handleInputChange}
-              />
-
-              <FormField
-                className="col-lg-2 col-md-6 mb-2"
-                control={Select}
-                label="DÒNG SẢN PHẨM"
-                options={productTypes}
-                placeholder="Vui lòng chọn"
-                name="productTypeId"
-                value={searchingParams.productTypeId}
-                onChange={handleInputChange}
-              />
-
-              <FormField
-                className="col-lg-2 col-md-6 mb-2"
-                control={Select}
-                label="SẮP XẾP"
-                options={options}
-                placeholder="Vui lòng chọn"
-                name="sortType"
-                value={searchingParams.sortType}
-                onChange={handleInputChange}
-              />
-              <div className="d-flex align-items-end col-lg-2 col-md-6 mb-2">
-                <Button primary size="medium">
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                  <span> TÌM KIẾM </span>
-                </Button>
-              </div>
-            </FormGroup>
-          </Form>
-        </div>
-        <Table celled selectable>
-          <TableHeader fullWidth>
-            <TableRow>
-              <TableHeaderCell className="center">
+            <div className="col-lg-2 col-6 row">
+              <label>
+                Danh Mục
                 <select
-                  className="pageSize"
-                  onChange={(e) => {
-                    setPageSize(e.target.value);
-                    setPage(1);
-                  }}
+                  name="categoryId"
+                  id="categoryId"
+                  value={searchingParams.categoryId}
+                  onChange={handleInputChange}
+                  className="form-control "
                 >
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
+                  <option value={0}>--Vui lòng chọn--</option>
+                  {categories.map((item) => (
+                    <option key={item.categoryId} value={item.categoryId}>
+                      {item.categoryName}
+                    </option>
+                  ))}
                 </select>
-              </TableHeaderCell>
-              <TableHeaderCell colSpan="11">
-                <NavLink to="/add-new">
-                  <Button
-                    floated="right"
-                    icon
-                    labelPosition="left"
-                    primary
-                    size="small"
+              </label>
+            </div>
+
+            <div className="col-lg-2 col-6 row">
+              <label>
+                Dòng sản phẩm
+                <select
+                  name="productTypeId"
+                  id="productTypeId"
+                  value={searchingParams.productTypeId}
+                  onChange={handleInputChange}
+                  className="form-control "
+                >
+                  <option value={0}>--Vui lòng chọn--</option>
+                  {productTypes.map((item) => (
+                    <option key={item.productTypeId} value={item.productTypeId}>
+                      {item.productTypeName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="col-lg-2 col-6 row">
+              <label>
+                Sắp xếp
+                <select
+                  name="sortType"
+                  id="sortType"
+                  value={searchingParams.sortType}
+                  onChange={handleInputChange}
+                  className="form-control "
+                >
+                  {options.map((item) => (
+                    <option key={item.key} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="d-flex align-items-center col-lg-1 col-6">
+              <button className="btn btn btn-primary w-50">
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="row">
+          <table className="table table-striped table-hover border table-responsive">
+            <thead className="thead-dark">
+              <tr>
+                <th colSpan="6">
+                  <select
+                    className="pageSize"
+                    onChange={(e) => {
+                      setPageSize(e.target.value);
+                      setPage(1);
+                    }}
                   >
-                    <Icon name="clone" /> THÊM MỚI
-                  </Button>
-                </NavLink>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </select>
+                  <button
+                    className={`btn btn-sm m-1
+             ${productFlag === 5 ? "btn-success" : "btn-dark"}
+           `}
+                    onClick={() => {
+                      handleProductFlagChange(5);
+                    }}
+                  >
+                    TẤT CẢ
+                  </button>
+                  <button
+                    className={`btn btn-sm m-1
+             ${productFlag === 1 ? "btn-success" : "btn-dark"}
+           `}
+                    onClick={() => {
+                      handleProductFlagChange(1);
+                    }}
+                  >
+                    ĐANG BÁN
+                  </button>
+                  <button
+                    className={`btn btn-sm m-1
+                    ${productFlag === 0 ? "btn-success" : "btn-dark"}
+                  `}
+                    onClick={() => {
+                      handleProductFlagChange(0);
+                    }}
+                  >
+                    TẠM NGƯNG
+                  </button>
+                </th>
+                <th colSpan="4">
+                  <h6>
+                    <strong>CÓ {totalElements} SẢN PHẨM ĐƯỢC TÌM THẤY</strong>
+                  </h6>
+                </th>
 
-                <Button
-                  size="small"
-                  onClick={() => {
-                    setProductFlag(5);
-                    setPage(1);
-                  }}
-                >
-                  TẤT CẢ
-                </Button>
-                <Button
-                  size="small"
-                  onClick={() => {
-                    setProductFlag(1);
-                    setPage(1);
-                  }}
-                >
-                  ĐANG BÁN
-                </Button>
-                <Button
-                  size="small"
-                  onClick={() => {
-                    setProductFlag(0);
-                    setPage(1);
-                  }}
-                >
-                  TẠM NGƯNG
-                </Button>
-              </TableHeaderCell>
-            </TableRow>
-          </TableHeader>
-          <TableHeader>
-            <TableRow className="text-center">
-              <TableHeaderCell>No.</TableHeaderCell>
-              <TableHeaderCell>MÃ SP</TableHeaderCell>
-              <TableHeaderCell>TÊN SẢN PHẨM</TableHeaderCell>
-              <TableHeaderCell>ĐƠN VỊ TÍNH</TableHeaderCell>
-              <TableHeaderCell>GIÁ VỐN</TableHeaderCell>
-              <TableHeaderCell>GIÁ BÁN LẺ</TableHeaderCell>
-              <TableHeaderCell>CHIẾT KHẤU (%)</TableHeaderCell>
-              <TableHeaderCell>GIÁ KHUYẾN MÃI</TableHeaderCell>
-              <TableHeaderCell>NHẬP KHO</TableHeaderCell>
-              <TableHeaderCell>ĐÃ BÁN</TableHeaderCell>
-              <TableHeaderCell>TỒN KHO</TableHeaderCell>
-              <TableHeaderCell>THAO TÁC</TableHeaderCell>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {products.map((productItem, index) => {
-              return (
-                <TableRow
-                  disabled={productItem.productFlag === 1}
-                  className="text-center"
-                  key={index}
-                >
-                  <TableCell>
-                    <strong>{(page - 1) * pageSize + index + 1}</strong>
-                  </TableCell>
-                  <TableCell>{productItem.code}</TableCell>
-                  <TableCell>{productItem.name}</TableCell>
-                  <TableCell>{productItem.unit}</TableCell>
-                  <TableCell>{productItem.costPrice}</TableCell>
-                  <TableCell>{productItem.retailPrice}</TableCell>
-                  <TableCell>{productItem.discountPercent}</TableCell>
-                  <TableCell>{productItem.salePrice}</TableCell>
-                  <TableCell>{productItem.quantity}</TableCell>
-                  <TableCell>{productItem.soldQuantity}</TableCell>
-                  <TableCell>{productItem.remainingQuantity}</TableCell>
-                  <TableCell>
-                    <div className="d-flex justify-content-around">
-                      <Link
-                        as={Link}
-                        to={`/edit/${productItem.id}`}
-                        className="text-white"
-                      >
-                        <i className="fa-regular fa-pen-to-square text-primary"></i>
-                      </Link>
-
-                      <Link onClick={() => deleteItem(productItem.id)}>
-                        <i className="fa-solid fa-trash text-secondary"></i>
-                      </Link>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+                <th colSpan="2" className="text-end">
+                  <NavLink to="/add-new">
+                    <button className="btn btn btn-primary m-1">
+                      THÊM MỚI
+                    </button>
+                  </NavLink>
+                </th>
+              </tr>
+            </thead>
+            <thead className="thead-dark">
+              <tr className="text-center table-dark">
+                <th>No.</th>
+                <th>MÃ SP</th>
+                <th>TÊN SẢN PHẨM</th>
+                <th>ĐƠN VỊ </th>
+                <th>GIÁ NHẬP</th>
+                <th>GIÁ BÁN LẺ</th>
+                <th>CHIẾT KHẤU (%)</th>
+                <th>GIÁ KHUYẾN MÃI</th>
+                <th>NHẬP KHO</th>
+                <th>ĐÃ BÁN</th>
+                <th>TỒN KHO</th>
+                <th>THAO TÁC</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((productItem, index) => {
+                return (
+                  <tr
+                    disabled={productItem.productFlag === 1}
+                    className="text-center"
+                    key={index}
+                  >
+                    <td>
+                      <strong>{(page - 1) * pageSize + index + 1}</strong>
+                    </td>
+                    <td>{productItem.code}</td>
+                    <td className="text-start">{productItem.name}</td>
+                    <td>{productItem.unit}</td>
+                    <td>{productItem.costPrice}</td>
+                    <td>{productItem.retailPrice}</td>
+                    <td>{productItem.discountPercent}</td>
+                    <td>{productItem.salePrice}</td>
+                    <td>{productItem.quantity}</td>
+                    <td>{productItem.soldQuantity}</td>
+                    <td>{productItem.remainingQuantity}</td>
+                    <td>
+                      <div className="d-flex justify-content-around">
+                        <Link
+                          as={Link}
+                          to={`/edit/${productItem.id}`}
+                          className="text-white"
+                        >
+                          <i className="fa-regular fa-pen-to-square text-primary"></i>
+                        </Link>
+                        {productItem.productFlag === 1 ? (
+                          <i className="fa-solid fa-triangle-exclamation text-danger m-1"></i>
+                        ) : (
+                          <Link onClick={() => deleteItem(productItem.id)}>
+                            <i className="fa-solid fa-trash text-secondary"></i>
+                          </Link>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="center">
-        <Pagination
-          color="primary"
-          className="my-3"
-          count={totalElement}
-          page={page}
-          siblingCount={1}
-          boundaryCount={1}
-          variant="outlined"
-          onChange={handlePageChange}
-        />
+        {totalElements > pageSize && (
+          <Pagination
+            color="primary"
+            className="my-3"
+            count={totalPages}
+            page={page}
+            siblingCount={1}
+            boundaryCount={1}
+            variant="outlined"
+            onChange={handlePageChange}
+          />
+        )}
       </div>
     </div>
   );

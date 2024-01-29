@@ -1,11 +1,15 @@
 .product-table {
-  min-height: 680px;
+  min-height: 640px;
 }
 
 .pageSize {
-  border: 1px solid #2185D0;
+  border: 1px solid #2d2e2e;
   border-radius: 4px;
-  height: 33.4px;
+  padding: 4px;
   font-weight: bold;
+}
+
+thead {
+  background-color: #2d2e2e;
 }
 
