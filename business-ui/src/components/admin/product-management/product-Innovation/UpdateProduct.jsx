@@ -230,8 +230,8 @@ const UpdateProduct = () => {
             </div>
             <div className="col-lg-10 col-12 p-0">
               <div className="row justify-content-around">
-                <div className="col-lg-3 col-sm-6 col-6 row">
-                  <label>
+                <div className="col-lg-3 col-6">
+                  <label className="w-100">
                     Danh Mục
                     <select
                       name="category"
@@ -250,7 +250,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 col-6 row">
+                <div className="col-lg-3 col-6">
                   <label>
                     Dòng Sản Phẩm
                     <select
@@ -273,7 +273,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-4 col-sm-8 row">
+                <div className="col-lg-3 col-sm-8">
                   <label>
                     Tên Sản Phẩm
                     <input
@@ -286,7 +286,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-2 col-sm-4 row">
+                <div className="col-lg-3 col-sm-4">
                   <label>
                     Mã Sản Phẩm
                     <input
@@ -302,7 +302,7 @@ const UpdateProduct = () => {
               </div>
 
               <div className="row justify-content-around">
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Khối Lượng (gram)
                     <input
@@ -310,12 +310,12 @@ const UpdateProduct = () => {
                       name="weight"
                       value={formData.weight}
                       onChange={handleInputChange}
-                      className="form-control "
+                      className="form-control"
                     />
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Số Lượng Trong Kho
                     <input
@@ -328,7 +328,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Đơn Vị Tính
                     <input
@@ -341,7 +341,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Giá Vốn
                     <input
@@ -356,7 +356,7 @@ const UpdateProduct = () => {
               </div>
 
               <div className="row justify-content-around">
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Giá Bán Sỉ
                     <input
@@ -369,7 +369,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Giá Bán Lẻ
                     <input
@@ -382,7 +382,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     % Chiết Khấu
                     <input
@@ -395,7 +395,7 @@ const UpdateProduct = () => {
                   </label>
                 </div>
 
-                <div className="col-lg-3 col-sm-6 row">
+                <div className="col-lg-3 col-sm-6">
                   <label>
                     Giá Khuyến Mãi
                     <input
@@ -413,7 +413,7 @@ const UpdateProduct = () => {
           </div>
 
           <div className="row">
-            <div className="col-lg-9 col-12">
+            <div className="col-lg-8 col-12">
               <div className="row">
                 <div className="col-12">
                   <div className="row">
@@ -472,7 +472,7 @@ const UpdateProduct = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-12">
+            <div className="col-lg-4 col-12">
               <div className="muti-images-upload-group">
                 <div className="">
                   <ProductImages

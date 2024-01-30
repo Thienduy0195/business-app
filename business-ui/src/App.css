@@ -1,25 +1,30 @@
 body {
   font-family: "Roboto Slab", serif !important;
-  font-size: 1rem!important;
+  font-size: 1rem !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Times New Roman", Times, serif!important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Times New Roman", Times, serif !important;
 }
 
-ul{
-  padding-left: 0!important;
+ul {
+  padding-left: 0 !important;
 }
 
 html {
-  font-size: 1rem!important;
+  font-size: 0.875rem !important;
 }
 
 .logo-color {
   background: #f66e00;
 }
 
-.title-color{
+.title-color {
   color: #c01d00f5;
 }
 
@@ -30,7 +35,7 @@ html {
 }
 
 .authenForm {
-  width: 450px;
+  width: 400px;
 }
 
 .searching-form {

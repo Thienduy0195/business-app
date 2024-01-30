@@ -61,7 +61,7 @@ function ForgotPassword() {
         <img
           className="formImage"
           src={forgotPassImg}
-          width="220"
+          width="200"
           style={{ position: "relative" }}
           alt="login"
         />
@@ -69,7 +69,7 @@ function ForgotPassword() {
       <div className="center">
         <div className="authenForm">
           <Grid textAlign="center">
-            <Grid.Column style={{ maxWidth: 400 }}>
+            <Grid.Column style={{ maxWidth: 360 }}>
               <div className="info-field">
                 <h5>Enter your email to update new password..</h5>
               </div>

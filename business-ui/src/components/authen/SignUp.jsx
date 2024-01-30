@@ -181,7 +181,7 @@ function SignUp() {
         <img
           className="formImage"
           src={signUpImg}
-          width="220"
+          width="200"
           style={{ position: "relative" }}
           alt="login"
         />
@@ -189,7 +189,7 @@ function SignUp() {
       <div className="center">
         <div className="authenForm">
           <Grid textAlign="center">
-            <Grid.Column style={{ maxWidth: 400 }}>
+            <Grid.Column style={{ maxWidth: 360 }}>
               {isHiddenCheckEmailForm && (
                 <Form
                   className="userForm"

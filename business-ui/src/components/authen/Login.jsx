@@ -91,7 +91,7 @@ function Login() {
         <img
           className="formImage"
           src={loginImg}
-          width="220"
+          width="200"
           style={{ position: "relative" }}
           alt="login"
         />
@@ -99,7 +99,7 @@ function Login() {
       <div className="center">
         <div className="authenForm">
           <Grid textAlign="center">
-            <Grid.Column style={{ maxWidth: 400 }}>
+            <Grid.Column style={{ maxWidth: 360 }}>
               <Form
                 className="userForm"
                 size="large"

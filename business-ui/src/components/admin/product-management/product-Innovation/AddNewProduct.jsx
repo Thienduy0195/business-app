@@ -403,7 +403,7 @@ const AddNewProduct = () => {
           </div>
 
           <div className="row mt-3">
-            <div className="col-lg-9 col-12">
+            <div className="col-lg-8 col-12">
               <div className="row">
                 <div className="col-12">
                   <div className="row">
@@ -462,7 +462,7 @@ const AddNewProduct = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-12">
+            <div className="col-lg-4 col-12">
               <div className="muti-images-upload-group">
                 <div className="">
                   <ProductImages

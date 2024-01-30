@@ -90,7 +90,7 @@ function ResetPassword() {
         <img
           className="formImage"
           src={resetImg}
-          width="220"
+          width="200"
           style={{ position: "relative" }}
           alt="login"
         />
@@ -104,7 +104,7 @@ function ResetPassword() {
       <div className="center">
         <div className="authenForm">
           <Grid textAlign="center">
-            <Grid.Column style={{ maxWidth: 400 }}>
+            <Grid.Column style={{ maxWidth: 360 }}>
               <Form size="large" onSubmit={formik.handleSubmit}>
                 <Segment>
                   <div className="reset-password d-flex justify-content-between">
