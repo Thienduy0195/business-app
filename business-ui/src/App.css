@@ -3,6 +3,10 @@ body {
   font-size: 1rem !important;
 }
 
+.container-max-width {
+  max-width: 1244px;
+}
+
 h1,
 h2,
 h3,

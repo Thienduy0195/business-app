@@ -41,7 +41,7 @@ const ProductList = () => {
   useEffect(showProducts, [page, pageSize]);
 
   return (
-    <div className="container">
+    <div className="container-fluid container-max-width">
       <div className="product-list-container">
         {products.map((product, index) => (
           <ProductCard
@@ -56,7 +56,7 @@ const ProductList = () => {
           />
         ))}
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="center">
         <Pagination
           color="primary"
           className="my-3"

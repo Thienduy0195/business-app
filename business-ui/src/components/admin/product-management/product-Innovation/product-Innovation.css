@@ -28,7 +28,6 @@ textarea {
 }
 
 .add-product-form h2 {
-  margin-bottom: px;
   font-size: 28px;
   font-weight: 700;
 }
@@ -69,17 +68,15 @@ textarea {
   align-items: center;
   flex-direction: column;
   position: relative;
-  margin-bottom: 8px;
-  /* height: 180px;
-  width: 180px; */
+  min-height: 160px;
+  min-width: 160px;
   border: 1px dashed #999999;
   border-radius: 10px;
-
   transition: all 0.7s ease;
 }
 
 .form-group-avatar-upload img {
-  min-height: 100px;
+  min-height: 150px;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -92,6 +89,8 @@ textarea {
   position: absolute;
   width: 100%;
   height: 100%;
+  min-height: 200px;
+  min-width: 200px;
   opacity: 0;
   cursor: pointer;
 }
@@ -158,7 +157,6 @@ textarea {
     align-items: center;
     flex-direction: column;
     position: relative;
-    margin-bottom: 8px;
     /* width: 100%;
     height: 100%;
     height: 152px;
@@ -173,6 +171,10 @@ textarea {
 @media screen and (max-width: 768px) {
   .col-md-9 {
     display: block;
+  }
+
+  .form-group-avatar-upload {
+    margin-bottom: 8px;
   }
 }
 
@@ -190,6 +192,6 @@ textarea {
   }
 
   .form-group-avatar-upload {
-    margin-bottom: 20px;
+    margin-bottom: 8px;
   }
 }
